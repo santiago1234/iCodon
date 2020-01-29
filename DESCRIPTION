@@ -1,0 +1,19 @@
+Package: optimalcodonR
+Title: Manipulating mRNA stability by synonymous codon choice
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Santiago Gerardo",
+           family = "Medina",
+           role = c("aut", "cre"),
+           email = "santiagogmm@hotmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: TODO:
+License: MIT + LICENSE.md
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Depends: 
+    R (>= 3.2.0)
+Imports: 
+    magrittr,
+    stringr
