@@ -7,10 +7,10 @@
 validate_sequence(secuencia)
 }
 \arguments{
-\item{secuencia}{coding dna string (must be in frame)}
+\item{secuencia}{string: coding dna,  must be in frame}
 }
 \value{
-throws an error if the sucuence contains invalid characters or is not a
+throws an error if the sequence contains invalid characters or is not a
 multiple of 3
 }
 \description{
