@@ -8,5 +8,5 @@
 #'
 #' @examples
 predict_stability <- function(secuencia, ...) {
-  rnorm(1)
+  stats::rnorm(1)
 }

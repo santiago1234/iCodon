@@ -17,6 +17,7 @@ Depends:
 Imports: 
     magrittr,
     stringr,
-    purrr
+    purrr,
+    tibble
 Suggests: 
     testthat
