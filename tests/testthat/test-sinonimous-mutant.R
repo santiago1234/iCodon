@@ -1,10 +1,15 @@
 testthat::test_that("variante_sinonima", {
   secuencia <- "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA"
 
+  # get the variant generator function
+  sampling_function <- sample_synonimous_codon(sampling_codon_distribution = sampling_optimization)
+  variant_generator <- variante_sinonima(secuencia, sampling_function, percentage = .7)
+
+
   # check that mutations are added it
   # using 100% percent should guarantee at least mutation
   set.seed(123)
-  variante <- variante_sinonima(secuencia, sample_synonimous_codon(sampling_optimization), 1)
+  variante <- variant_generator(secuencia)
   expect_true(variante != secuencia)
 
   # same protein sequence
