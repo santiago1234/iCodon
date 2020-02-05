@@ -38,6 +38,38 @@ translate <- function(secuencia) {
 }
 
 
-# write a codon distance function
-# this will be used for testing porposes
+#' Codon distance
+#'
+#' compute the number of codon differences between the two sequences
+#'
+#' @param seq_variant1 string: coding dna,  must be in frame
+#' @param seq_variant2 string: coding dna,  must be in frame
+#'
+#' @return int, number of codon diferences
+#' @export
+#'
+#' @examples
+codon_distance <- function(seq_variant1, seq_variant2, proportion = FALSE) {
+
+  if (translate(seq_variant1) != translate(seq_variant2)) {
+    warning("sequences are not synonimous")
+  }
+
+  distance <-
+    seq(from = 1, to = nchar(seq_variant1), by = 3) %>%
+    purrr::map_lgl(
+      function(x) stringr::str_sub(seq_variant1, x, x + 2) != stringr::str_sub(seq_variant2, x, x + 2)
+      ) %>%
+    sum()
+
+  if (proportion) {
+    distance <- distance / (nchar(seq_variant1)/3)
+
+  }
+
+  distance
+}
+
+
+
 

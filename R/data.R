@@ -41,3 +41,10 @@
 #'
 #' @format list mapping amino acid to synonimous codon sampling probabilities
 "sampling_optimization"
+
+
+#' DNA sequence
+#'
+#' a character dna sequence that i used for testing/development
+#' @format character
+"test_seq"
