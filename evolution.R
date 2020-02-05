@@ -23,38 +23,43 @@ sample_synonimous_codon <- function(sampling_codon_distribution) {
 }
 
 
-#' Generate synonimous mutant variant
+#' Generate synonimous mutant variants
 #'
 #' @param secuencia string, coding DNA sequence in frame
 #' @param sampling_distribution function, \code{\link{sample_synonimous_codon}}
 #' the sampling codon distribution
-#' @param percentage float, the percentage of the sequence to be mutated
-#' max = 1 (mutate all codons), min = 0 (mutate no codons). This function wont change
-#' the 1st and last codon
+#' @param mutation_rate number of positions to be mutated expressed as a percentage
+#' max = 1 (mutate all codons), min = 0 (mutate no codons).
+#' the 1st and last codon are never changed
+#' @param n_daughters int, the number of random synonimous sequences to generate
+#' at each function call
 #'
 #' @return function, sinonimous generator: A function that takes as input
 #' a sequence and will create sinonimous mutations in that sequence
 #' @export
 #'
 #' @examples
-#' sampling_distribution <- sample_synonimous_codon(sampling_codon_distribution = sampling_deoptimization)
+#' sampling_distribution <- sample_synonimous_codon(
+#'   sampling_codon_distribution = sampling_deoptimization
+#' )
 #' seq <- "ATGCCCGGGATGATGTTT"
-#' variante_sinonima(seq, sampling_distribution, .5)
-variante_sinonima <- function(secuencia, sampling_distribution, percentage = .3) {
+#' evolution(seq, sampling_distribution)
+evolution <- function(secuencia, sampling_distribution, mutation_rate = .3, n_daughters = 10) {
 
   stopifnot(nchar(secuencia) > 6)
-  stopifnot(percentage >= 0)
-  stopifnot(percentage <= 1)
+  stopifnot(mutation_rate >= 0)
+  stopifnot(mutation_rate <= 1)
 
-  # pick n positions proportional to the percentage of mutations
-  n_positions <- floor(((nchar(secuencia) / 3 ) - 6) * percentage)
+  # pick n positions proportional to the mutation_rate of mutations
+  n_positions <- floor(((nchar(secuencia) / 3 ) - 6) * mutation_rate)
 
   # i start from 4 so the star codon is never touched
   # also the last codon is never touched
   posiciones <- seq(from=4, to = nchar(secuencia) - 3, by = 3)
 
-
-  function(seq2) {
+  # this an internal function to generate a sinonimous variant sequence
+  # from the given sequence
+  variant_generator <- function(seq2) {
     mutante_sinonima <- seq2
     # seq2 is the sequence to mutate
     positiones_a_mutar <- sample(posiciones, size = n_positions)
@@ -69,4 +74,11 @@ variante_sinonima <- function(secuencia, sampling_distribution, percentage = .3)
     mutante_sinonima
 
   }
+
+
+  function(current_seq) {
+    purrr::map_chr(1:n_daughters, ~variant_generator(current_seq))
+  }
 }
+
+

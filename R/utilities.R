@@ -36,4 +36,8 @@ translate <- function(secuencia) {
     purrr::map(function(x) optimalcodonR::gc_codons_to_amino[stringr::str_sub(secuencia, x, x + 2)]) %>%
     purrr::reduce(paste0)
 }
-#
+
+
+# write a codon distance function
+# this will be used for testing porposes
+
