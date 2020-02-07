@@ -25,7 +25,7 @@ sample_synonimous_codon <- function(sampling_codon_distribution) {
 
 #' Generate synonimous mutant variants
 #'
-#' @param secuencia string, coding DNA sequence in frame
+#' @param starting_sequence string, coding DNA sequence in frame
 #' @param sampling_distribution function, \code{\link{sample_synonimous_codon}}
 #' the sampling codon distribution
 #' @param mutation_rate number of positions to be mutated expressed as a percentage
@@ -44,18 +44,17 @@ sample_synonimous_codon <- function(sampling_codon_distribution) {
 #' )
 #' seq <- "ATGCCCGGGATGATGTTT"
 #' evolution(seq, sampling_distribution)
-evolution <- function(secuencia, sampling_distribution, mutation_rate = .3, n_daughters = 10) {
-
-  stopifnot(nchar(secuencia) > 6)
+evolution <- function(starting_sequence, sampling_distribution, mutation_rate = .3, n_daughters = 10) {
+  stopifnot(nchar(starting_sequence) > 6)
   stopifnot(mutation_rate >= 0)
   stopifnot(mutation_rate <= 1)
 
   # pick n positions proportional to the mutation_rate of mutations
-  n_positions <- floor(((nchar(secuencia) / 3 ) - 6) * mutation_rate)
+  n_positions <- floor(((nchar(starting_sequence) / 3) - 6) * mutation_rate)
 
   # i start from 4 so the star codon is never touched
   # also the last codon is never touched
-  posiciones <- seq(from=4, to = nchar(secuencia) - 3, by = 3)
+  posiciones <- seq(from = 4, to = nchar(starting_sequence) - 3, by = 3)
 
   # this an internal function to generate a sinonimous variant sequence
   # from the given sequence
@@ -65,20 +64,18 @@ evolution <- function(secuencia, sampling_distribution, mutation_rate = .3, n_da
     positiones_a_mutar <- sample(posiciones, size = n_positions)
 
     for (position in positiones_a_mutar) {
-      current_codon <- substr(mutante_sinonima, position, position+2)
+      current_codon <- substr(mutante_sinonima, position, position + 2)
 
       # sample one current amino randomly
-      substr(mutante_sinonima, position, position+2) <- sampling_distribution(translate(current_codon))
+      substr(mutante_sinonima, position, position + 2) <- sampling_distribution(translate(current_codon))
     }
 
     mutante_sinonima
-
   }
 
 
   function(current_seq) {
-    purrr::map_chr(1:n_daughters, ~variant_generator(current_seq))
+    # c() to keep the mother sequence
+    c(current_seq, purrr::map_chr(1:n_daughters, ~ variant_generator(current_seq)))
   }
 }
-
-

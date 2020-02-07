@@ -4,11 +4,11 @@
 \alias{evolution}
 \title{Generate synonimous mutant variants}
 \usage{
-evolution(secuencia, sampling_distribution, mutation_rate = 0.3,
+evolution(starting_sequence, sampling_distribution, mutation_rate = 0.3,
   n_daughters = 10)
 }
 \arguments{
-\item{secuencia}{string, coding DNA sequence in frame}
+\item{starting_sequence}{string, coding DNA sequence in frame}
 
 \item{sampling_distribution}{function, \code{\link{sample_synonimous_codon}}
 the sampling codon distribution}

@@ -50,7 +50,6 @@ translate <- function(secuencia) {
 #'
 #' @examples
 codon_distance <- function(seq_variant1, seq_variant2, proportion = FALSE) {
-
   if (translate(seq_variant1) != translate(seq_variant2)) {
     warning("sequences are not synonimous")
   }
@@ -59,17 +58,12 @@ codon_distance <- function(seq_variant1, seq_variant2, proportion = FALSE) {
     seq(from = 1, to = nchar(seq_variant1), by = 3) %>%
     purrr::map_lgl(
       function(x) stringr::str_sub(seq_variant1, x, x + 2) != stringr::str_sub(seq_variant2, x, x + 2)
-      ) %>%
+    ) %>%
     sum()
 
   if (proportion) {
-    distance <- distance / (nchar(seq_variant1)/3)
-
+    distance <- distance / (nchar(seq_variant1) / 3)
   }
 
   distance
 }
-
-
-
-

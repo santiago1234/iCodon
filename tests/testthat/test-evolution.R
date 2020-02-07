@@ -9,7 +9,10 @@ testthat::test_that("evolution", {
   # check that mutations are added it
   # using 100% percent should guarantee at least mutation
   set.seed(123)
-  variante <- variant_generator(test_seq)
+  variante <- variant_generator(test_seq)[2]
+  # test that keeps mother sequence
+  expect_true(test_seq %in% variant_generator(test_seq))
+
   expect_true(variante != test_seq)
 
   # same protein sequence
@@ -24,7 +27,7 @@ testthat::test_that("evolution", {
   variant_generator2 <- evolution(test_seq, sampling_function, mutation_rate = .1, n_daughters = 10)
   distances <-
     variant_generator2(variante) %>%
-    purrr::map_dbl(~codon_distance(., variante, proportion = T))
+    purrr::map_dbl(~ codon_distance(., variante, proportion = T))
   expect_true(all(distances < .1))
 
   # this result is stochastic but at least 10% difference when we mutate
@@ -32,9 +35,9 @@ testthat::test_that("evolution", {
 
   variant_generator2 <- evolution(test_seq, sampling_function, mutation_rate = 1, n_daughters = 10)
   distances <-
-    variant_generator2(variante) %>%
-    purrr::map_dbl(~codon_distance(., test_seq, proportion = T))
+    variant_generator2(test_seq) %>%
+    # discard the first sequence that is always the smae
+    .[2:length(.)] %>%
+    purrr::map_dbl(~ codon_distance(., test_seq, proportion = T))
   expect_true(all(distances > .1))
-
-
 })
