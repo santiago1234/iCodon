@@ -9,6 +9,9 @@ predict_stability(secuencia, ...)
 \arguments{
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Title
 }

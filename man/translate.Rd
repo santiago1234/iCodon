@@ -7,7 +7,7 @@
 translate(secuencia)
 }
 \arguments{
-\item{secuencia}{string: coding dna,  must be in frame}
+\item{secuencia}{character: coding dna,  must be in frame}
 }
 \value{
 string, amino acid sequence
@@ -16,5 +16,5 @@ string, amino acid sequence
 translate DNA sequence to amino acid
 }
 \examples{
-translate("ATG")
+translate("ATGTTT")
 }

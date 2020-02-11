@@ -2,6 +2,7 @@
 
 export("%>%")
 export(codon_distance)
+export(count_codons)
 export(evolution)
 export(optimizer)
 export(predict_stability)

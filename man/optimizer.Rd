@@ -4,8 +4,12 @@
 \alias{optimizer}
 \title{Genetic algorithm for mRNA stability optimization}
 \usage{
-optimizer(sequence_to_optimize, stability_predictor = predict_stability,
-  n_iterations = 100, make_more_optimal = T)
+optimizer(
+  sequence_to_optimize,
+  stability_predictor = predict_stability,
+  n_iterations = 100,
+  make_more_optimal = T
+)
 }
 \arguments{
 \item{sequence_to_optimize}{character, coding DNA sequence from start codon to

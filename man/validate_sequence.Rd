@@ -7,7 +7,7 @@
 validate_sequence(secuencia)
 }
 \arguments{
-\item{secuencia}{string: coding dna,  must be in frame}
+\item{secuencia}{character: coding dna,  must be in frame}
 }
 \value{
 throws an error if the sequence contains invalid characters or is not a
@@ -15,4 +15,7 @@ multiple of 3
 }
 \description{
 Check correct input DNA sequence
+}
+\examples{
+validate_sequence(test_seq)
 }

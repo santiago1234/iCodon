@@ -4,8 +4,12 @@
 \alias{evolution}
 \title{Generate synonimous mutant variants}
 \usage{
-evolution(starting_sequence, sampling_distribution, mutation_rate = 0.3,
-  n_daughters = 10)
+evolution(
+  starting_sequence,
+  sampling_distribution,
+  mutation_rate = 0.3,
+  n_daughters = 10
+)
 }
 \arguments{
 \item{starting_sequence}{string, coding DNA sequence in frame}

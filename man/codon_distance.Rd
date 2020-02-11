@@ -17,3 +17,6 @@ int, number of codon diferences
 \description{
 compute the number of codon differences between the two sequences
 }
+\examples{
+codon_distance("ATGCTG", "ATGCTT")
+}
