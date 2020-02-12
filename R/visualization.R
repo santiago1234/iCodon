@@ -9,7 +9,6 @@ seq_to_positional_codon_frame <- function(secuencia) {
 
 
 visualize_evolution <- function(optimization_run, draw_heatmap = T) {
-
   optimality_content_at_each_iteration <-
     optimization_run %>%
     dplyr::select(.data$iteration, .data$synonymous_seq) %>%
@@ -22,19 +21,17 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
 
 
   if (draw_heatmap) {
-
     optimality_content_at_each_iteration %>%
-      ggplot2::ggplot(aes(x=.data$position, y=.data$iteration, fill = optimality)) +
+      ggplot2::ggplot(aes(x = .data$position, y = .data$iteration, fill = optimality)) +
       ggplot2::geom_tile() +
       ggplot2::scale_x_continuous(expand = c(0, 0)) +
       ggplot2::scale_y_continuous(expand = c(0, 0)) +
-      ggplot2::scale_fill_viridis_c(option = "C",limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02))
+      ggplot2::scale_fill_viridis_c(option = "C", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02))
   } else {
     optimality_content_at_each_iteration %>%
-      ggplot2::ggplot(aes(x=optimality, group=iteration, color = iteration))+
-      ggplot2::geom_density(alpha = .5, size=1/3) +
+      ggplot2::ggplot(aes(x = optimality, group = iteration, color = iteration)) +
+      ggplot2::geom_density(alpha = .5, size = 1 / 3) +
       ggplot2::scale_color_viridis_c() +
       ggplot2::theme_light()
-
   }
 }

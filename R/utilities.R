@@ -62,7 +62,8 @@ translate <- function(secuencia) {
 #'
 #' @param seq_variant1 string: coding dna,  must be in frame
 #' @param seq_variant2 string: coding dna,  must be in frame
-#'
+#' @param proportion logical: if true, returns the distance as a proportion
+#' (1 = all codons are different, 0 = no differences)
 #' @return int, number of codon diferences
 #' @export
 #'
@@ -104,7 +105,4 @@ count_codons <- function(secuencia) {
 
   tibble::tibble(codon = split_by_codons(secuencia)) %>%
     dplyr::count(.data$codon)
-
 }
-
-

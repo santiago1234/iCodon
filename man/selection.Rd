@@ -12,13 +12,12 @@ and produces a predicted stability (decay rate)}
 
 \item{optimization}{logical: True for optimization (more stable sequence) and False
 for deoptimization (more unstable sequence)}
-
-\item{syn_daughters}{character: synonymous sequences to evaluate (only for output function)}
-
-\item{current_iteration}{integer: current iteration (only for output function)}
 }
 \value{
 function, selector function that take as input:
+This function contains the following arguments:
+\code{syn_daughters} character: synonymous sequences to evaluate (only for output function)
+\code{current_iteration} integer: current iteration (only for output function)
 }
 \description{
 produces a function for the selection. This function performs the following"

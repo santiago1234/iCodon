@@ -10,8 +10,9 @@
 #' for deoptimization (more unstable sequence)
 #'
 #' @return function, selector function that take as input:
-#' @param syn_daughters character: synonymous sequences to evaluate (only for output function)
-#' @param current_iteration integer: current iteration (only for output function)
+#' This function contains the following arguments:
+#' \code{syn_daughters} character: synonymous sequences to evaluate (only for output function)
+#' \code{current_iteration} integer: current iteration (only for output function)
 #' @export
 selection <- function(stability_predictor, optimization = TRUE) {
 

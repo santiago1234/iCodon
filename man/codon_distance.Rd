@@ -10,6 +10,9 @@ codon_distance(seq_variant1, seq_variant2, proportion = FALSE)
 \item{seq_variant1}{string: coding dna,  must be in frame}
 
 \item{seq_variant2}{string: coding dna,  must be in frame}
+
+\item{proportion}{logical: if true, returns the distance as a proportion
+(1 = all codons are different, 0 = no differences)}
 }
 \value{
 int, number of codon diferences
