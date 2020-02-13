@@ -76,7 +76,7 @@
 "training"
 
 
-#' Testung data
+#' Testing data
 #'
 #' This is the data used to test the predictive model
 #'
@@ -100,4 +100,18 @@
 #'   \item{cdslenlog}{size in log scale of the coding sequence}
 #' }
 "testing"
+
+
+#' Data pre-processing pipeline
+#'
+#' The pipeline to pre-process the data for predicting the mRNA stability
+#' NOTE: see the file: data-raw/modeling.R where I generated this
+"preprocessing_recipe"
+
+#' Predictive model of mRNA stability
+#'
+#' lasso (glmnet) model to predic the mRNA stability bassed on coding
+#' sequence information
+#' NOTE: see the file: data-raw/modeling.R where this model is trained
+"mrna_stability_model"
 

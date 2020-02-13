@@ -19,6 +19,6 @@ codones <-
   dplyr::mutate(
     codon = paste0(n1, n2, n3)
   ) %>%
-  dplyr::pull(codon)
+  dplyr::select(codon)
 
 usethis::use_data(codones, overwrite = T)

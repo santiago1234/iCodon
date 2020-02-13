@@ -21,7 +21,8 @@ add_codon_counts <- function(datos) {
 
   codon_counter <- function(secuencia) {
     count_codons(secuencia) %>%
-      dplyr::filter(.data$codon %in% codones)
+      dplyr::full_join(codones, by = "codon") %>%
+      dplyr::filter(.data$codon %in% codones$codon)
   }
 
   counts <- dplyr::select(datos, .data$gene_id, .data$coding) %>%
@@ -52,3 +53,49 @@ add_codon_counts <- function(datos) {
 
   dplyr::inner_join(datos, counts, by = c("gene_id", "coding"))
 }
+
+
+
+preprocess_secuences <- function(secuences, specie_="human") {
+
+  maketible <- function(s, c, d) {
+    tibble::tibble(
+      specie = s,
+      cell_type = c,
+      datatype = d
+    )
+  }
+
+  if (specie_ == "human") {
+    tmp <- maketible("human", "k562", "slam-seq")
+  }
+  if (specie_ == "fish") {
+    tmp <- maketible("fish", "embryo mzt", "aamanitin polya")
+  }
+  if (specie_ == "mouse") {
+    tmp <- maketible("mouse", "mES cells", "slam-seq")
+  }
+  if (specie_ == "xenopus") {
+    tmp <- maketible("xenopus", "embryo mzt", "aamanitin ribo")
+  }
+
+  dta_to_pred <-
+    tibble::tibble(
+    gene_id = secuences,
+    coding = secuences,
+    cdslenlog = log(nchar(secuences)),
+    utrlenlog = NA_real_,
+    decay_rate = NA_real_,
+  ) %>%
+    tidyr::crossing(tmp) %>%
+    add_codon_counts()
+
+
+  # preprocess the data with the pipeline
+  recipes::bake(preprocessing_recipe, dta_to_pred)
+}
+
+
+
+
+
