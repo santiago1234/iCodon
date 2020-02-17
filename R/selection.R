@@ -8,7 +8,6 @@
 #' and produces a predicted stability (decay rate)
 #' @param optimization logical: True for optimization (more stable sequence) and False
 #' for deoptimization (more unstable sequence)
-#'
 #' @return function, selector function that take as input:
 #' This function contains the following arguments:
 #' \code{syn_daughters} character: synonymous sequences to evaluate (only for output function)
@@ -42,7 +41,7 @@ selection <- function(stability_predictor, optimization = TRUE) {
       synonymous_seq = syn_daughters
     ) %>%
       dplyr::mutate(
-        predicted_stability = purrr::map_dbl(synonymous_seq, stability_predictor)
+        predicted_stability = purrr::map_dbl(.data$synonymous_seq, stability_predictor)
       ) %>%
       artificial_selector()
   }

@@ -102,6 +102,14 @@
 "testing"
 
 
+#' The genetic code
+#' #' \describe{
+#'   \item{codon}{three letter nucleotide codon}
+#' }
+#' @format  A tibble with 64 rows and 1 variable
+"codones"
+
+
 #' Data pre-processing pipeline
 #'
 #' The pipeline to pre-process the data for predicting the mRNA stability

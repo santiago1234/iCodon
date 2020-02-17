@@ -28,7 +28,7 @@ add_codon_counts <- function(datos) {
   counts <- dplyr::select(datos, .data$gene_id, .data$coding) %>%
     unique() %>%
     dplyr::mutate(
-      counts = purrr::map(coding, codon_counter)
+      counts = purrr::map(.data$coding, codon_counter)
     )
 
   # NA values represent zero counts
@@ -55,8 +55,18 @@ add_codon_counts <- function(datos) {
 }
 
 
-
-preprocess_secuences <- function(secuences, specie_="human") {
+#' Preprocess sequence for prediction mRNA stability
+#'
+#' @inheritParams validate_sequence
+#' @param specie_ character: one of human, mouse, fish, or xenopus
+#'
+#' @return A tibble: \code{length(secuencia)} x 423, preprocessed data for estimating
+#' mrna stability
+#' @export
+#'
+#' @examples
+#' preprocess_secuences(test_seq, specie_ = "mouse")
+preprocess_secuences <- function(secuencia, specie_="human") {
 
   maketible <- function(s, c, d) {
     tibble::tibble(
@@ -81,11 +91,11 @@ preprocess_secuences <- function(secuences, specie_="human") {
 
   dta_to_pred <-
     tibble::tibble(
-    gene_id = secuences,
-    coding = secuences,
-    cdslenlog = log(nchar(secuences)),
+    gene_id = secuencia,
+    coding = secuencia,
+    cdslenlog = log(nchar(secuencia)),
     utrlenlog = NA_real_,
-    decay_rate = NA_real_,
+    decay_rate = NA_real_
   ) %>%
     tidyr::crossing(tmp) %>%
     add_codon_counts()
@@ -94,8 +104,3 @@ preprocess_secuences <- function(secuences, specie_="human") {
   # preprocess the data with the pipeline
   recipes::bake(preprocessing_recipe, dta_to_pred)
 }
-
-
-
-
-

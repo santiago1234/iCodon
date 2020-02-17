@@ -3,7 +3,7 @@
 \docType{data}
 \name{testing}
 \alias{testing}
-\title{Testung data}
+\title{Testing data}
 \format{A data frame with 67,775 rows and 8 variables:
 \describe{
   \item{gene_id}{Ensembl gene id}
