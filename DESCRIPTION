@@ -8,7 +8,7 @@ Authors@R:
            email = "santiagogmm@hotmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: TODO:
-License: MIT + LICENSE.md
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
@@ -27,4 +27,5 @@ Imports:
     glmnet (>= 3.0.2),
     rlang
 Suggests: 
-    testthat
+    testthat,
+    covr

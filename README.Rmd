@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
+[![Codecov test coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
 <!-- badges: end -->
 
 The goal of optimalcodonR is to ...
@@ -50,7 +51,7 @@ cat(test_seq)
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
 ```{r optimization}
-sequence <- training$coding[27]
+sequence <- test_seq
 result <- optimizer(sequence, specie = "mouse", n_iterations = 30, make_more_optimal = T)
 ```
 

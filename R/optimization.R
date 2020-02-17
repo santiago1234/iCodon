@@ -7,7 +7,7 @@
 #' @param make_more_optimal logical, If true the sequence is optimized, if false
 #' is is deoptimized (less optimal)
 #'
-#' @return tibble data frame, the best sequence at each iteration
+#' @return a [tibble][tibble::tibble-package], the best sequence at each iteration
 #' @export
 #'
 #' @examples

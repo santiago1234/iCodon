@@ -23,7 +23,7 @@ stop codon}
 is is deoptimized (less optimal)}
 }
 \value{
-tibble data frame, the best sequence at each iteration
+a [tibble][tibble::tibble-package], the best sequence at each iteration
 }
 \description{
 Genetic algorithm for mRNA stability optimization

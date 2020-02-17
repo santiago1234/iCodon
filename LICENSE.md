@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2020 Santiago Gerardo Medina
+Copyright (c) 2020 Santiago G. Medina
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
