@@ -4,10 +4,12 @@
 \alias{preprocess_secuences}
 \title{Preprocess sequence for prediction mRNA stability}
 \usage{
-preprocess_secuences(secuencia, specie_ = "human")
+preprocess_secuences(secuencias, specie_ = "human")
 }
 \arguments{
-\item{secuencia}{character: coding dna,  must be in frame}
+\item{secuencias}{character, a vector of dna sequences to predict. If
+more than one sequence is supplied, then the sequences should be unique. (No
+repeated sequences)}
 
 \item{specie_}{character: one of human, mouse, fish, or xenopus}
 }
@@ -19,5 +21,5 @@ mrna stability
 Preprocess sequence for prediction mRNA stability
 }
 \examples{
-preprocess_secuences(test_seq, specie_ = "mouse")
+preprocess_secuences(test_seq, "mouse")
 }

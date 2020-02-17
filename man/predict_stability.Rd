@@ -2,16 +2,25 @@
 % Please edit documentation in R/predict-stability.R
 \name{predict_stability}
 \alias{predict_stability}
-\title{Title}
+\title{Predict mRNA stability}
 \usage{
-predict_stability(secuencia, ...)
+predict_stability(secuencias, specie)
 }
 \arguments{
-\item{...}{}
+\item{secuencias}{character, a vector of dna sequences to predict. If
+more than one sequence is supplied, then the sequences should be unique. (No
+repeated sequences)}
+
+\item{specie}{character: one of human, mouse, fish, or xenopus}
 }
 \value{
 
 }
 \description{
-Title
+This function predicts the mRNA stability of the given sequences in the corresponding
+specie. The prediction is generated with the model: \code{mrna_stability_model}
+}
+\examples{
+# predict some sequences in fish
+predict_stability("ATGCCCGGG", "fish")
 }

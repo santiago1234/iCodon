@@ -122,4 +122,3 @@
 #' sequence information
 #' NOTE: see the file: data-raw/modeling.R where this model is trained
 "mrna_stability_model"
-

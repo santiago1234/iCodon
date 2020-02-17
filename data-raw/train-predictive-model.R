@@ -17,7 +17,7 @@ dat_for_preproc <-
   X_train %>%
   dplyr::group_by(specie, cell_type, datatype) %>%
   tidyr::nest() %>%
-  mutate(sub_sample = purrr::map(data, ~dplyr::sample_n(., 50))) %>%
+  mutate(sub_sample = purrr::map(data, ~ dplyr::sample_n(., 50))) %>%
   dplyr::select(-data) %>%
   tidyr::unnest(sub_sample) %>%
   ungroup()
@@ -30,12 +30,12 @@ preprocessing_recipe <- recipes::recipe(dat_for_preproc) %>%
   recipes::step_spatialsign(matches("c_")) %>%
   recipes::step_dummy(specie, cell_type, datatype, one_hot = FALSE) %>%
   # this are the top codon affecting mRNA stability
-  recipes::step_interact(terms =  ~ (c_CAC + c_TGT + c_TAA + c_CAT + c_GAT +
-                                       c_GGA + c_AGT + c_AGC + c_TAG + c_TGA +
-                                       c_TTA + c_AAG + c_AAA + c_ATC + c_AGG +
-                                       c_GCT + c_TCG + c_ACT + c_CGG + c_TCA +
-                                       cdslenlog + utrlenlog +
-                                       matches("specie") + matches("data"))^2) %>%
+  recipes::step_interact(terms = ~ (c_CAC + c_TGT + c_TAA + c_CAT + c_GAT +
+    c_GGA + c_AGT + c_AGC + c_TAG + c_TGA +
+    c_TTA + c_AAG + c_AAA + c_ATC + c_AGG +
+    c_GCT + c_TCG + c_ACT + c_CGG + c_TCA +
+    cdslenlog + utrlenlog +
+    matches("specie") + matches("data"))^2) %>%
   recipes::step_nzv(recipes::all_numeric()) %>%
   recipes::step_center(recipes::all_numeric()) %>%
   recipes::step_scale(recipes::all_numeric())

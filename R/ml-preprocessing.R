@@ -57,7 +57,9 @@ add_codon_counts <- function(datos) {
 
 #' Preprocess sequence for prediction mRNA stability
 #'
-#' @inheritParams validate_sequence
+#' @param secuencias character, a vector of dna sequences to predict. If
+#' more than one sequence is supplied, then the sequences should be unique. (No
+#' repeated sequences)
 #' @param specie_ character: one of human, mouse, fish, or xenopus
 #'
 #' @return A tibble: \code{length(secuencia)} x 423, preprocessed data for estimating
@@ -65,8 +67,11 @@ add_codon_counts <- function(datos) {
 #' @export
 #'
 #' @examples
-#' preprocess_secuences(test_seq, specie_ = "mouse")
-preprocess_secuences <- function(secuencia, specie_="human") {
+#' preprocess_secuences(test_seq, "mouse")
+preprocess_secuences <- function(secuencias, specie_ = "human") {
+  if (length(secuencias) != length(unique(secuencias))) {
+    stop("Input sequences should be unique, repeats found")
+  }
 
   maketible <- function(s, c, d) {
     tibble::tibble(
@@ -89,15 +94,22 @@ preprocess_secuences <- function(secuencia, specie_="human") {
     tmp <- maketible("xenopus", "embryo mzt", "aamanitin ribo")
   }
 
+  # I added the temporal rank variable to return the table in the same order
+  # as the input secuencias, this guarantees the integrety and hence this
+  # function can be vectorized to increase the speed
+
   dta_to_pred <-
     tibble::tibble(
-    gene_id = secuencia,
-    coding = secuencia,
-    cdslenlog = log(nchar(secuencia)),
-    utrlenlog = NA_real_,
-    decay_rate = NA_real_
-  ) %>%
+      gene_id = secuencias,
+      coding = secuencias,
+      tmp_rank = 1:length(secuencias),
+      cdslenlog = log(nchar(secuencias)),
+      utrlenlog = NA_real_,
+      decay_rate = NA_real_
+    ) %>%
     tidyr::crossing(tmp) %>%
+    dplyr::arrange(.data$tmp_rank) %>%
+    dplyr::select(-.data$tmp_rank) %>%
     add_codon_counts()
 
 
