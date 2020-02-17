@@ -53,7 +53,7 @@ optimizer <- function(sequence_to_optimize,
   best_at_each_iteration[[1]] <- current_best
 
   for (i in 2:n_iterations) {
-    message(i)
+    message(paste0(i, "."), appendLF = FALSE)
 
     hijas_mutantes <- evolucionador(current_seq = current_best$synonymous_seq)
     current_best <- selector(hijas_mutantes, i)

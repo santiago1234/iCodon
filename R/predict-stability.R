@@ -10,7 +10,6 @@
 #' @export
 #'
 #' @examples
-# predict some sequences in fish
 #' predictor_fish <- predict_stability("fish")
 #' some_seqs <- testing$coding[1:3]
 #' predicted_stability <- predictor_fish(some_seqs)
@@ -25,6 +24,5 @@ predict_stability <- function(specie) {
 
     glmnet::predict.glmnet(mrna_stability_model, newx = x_predict) %>%
       as.numeric()
-
   }
 }

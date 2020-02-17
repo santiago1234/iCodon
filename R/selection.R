@@ -43,6 +43,5 @@ selection <- function(stability_predictor, optimization = TRUE) {
     hijas$predicted_stability <- stability_predictor(hijas$synonymous_seq)
 
     artificial_selector(hijas)
-
   }
 }

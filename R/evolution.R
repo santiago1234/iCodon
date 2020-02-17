@@ -76,6 +76,8 @@ evolution <- function(starting_sequence, sampling_distribution, mutation_rate = 
 
   function(current_seq) {
     # c() to keep the mother sequence
-    c(current_seq, purrr::map_chr(1:n_daughters, ~ variant_generator(current_seq)))
+    # I use unique to always return unique sequences
+    c(current_seq, purrr::map_chr(1:n_daughters, ~ variant_generator(current_seq))) %>%
+      unique()
   }
 }

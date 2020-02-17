@@ -8,6 +8,14 @@ seq_to_positional_codon_frame <- function(secuencia) {
 }
 
 
+#' Visualiztion tools
+#'
+#' Helper function to visualize the optimization
+#' @param optimization_run tibble: the output result of \code{\link{optimizer}}
+#' @param draw_heatmap logical: If true draws a heatmap, otherwise draws ... TODO
+#'
+#' @return plot: ggplot2 object
+#' @export
 visualize_evolution <- function(optimization_run, draw_heatmap = T) {
   optimality_content_at_each_iteration <-
     optimization_run %>%

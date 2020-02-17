@@ -7,19 +7,21 @@
 add_codon_counts(datos)
 }
 \arguments{
-\item{datos:}{A data frame with at least the following variables
+\item{datos}{A data frame with at least the following variables
 \describe{
 \item{gene_id}{id, to identify each particular secuence}
 \item{coding}{DNA, coding sequence in frame}
-}}
+}
+
+Add the codon counts to input data. The codon counts is the frequency of
+each of the 64 codons in the input data frame}
 }
 \value{
 a tibble with the codon counts as columns append to the input tibble
 the columns are named with c_CODN (i.e c_AAA, ..., c_TTT)
 }
 \description{
-Add the codon counts to input data. The codon counts is the frequency of
-each of the 64 codons in the input data frame
+Add codon counts to data
 }
 \examples{
 add_codon_counts(testing[1:5, ])

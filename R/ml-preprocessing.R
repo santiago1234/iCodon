@@ -1,13 +1,13 @@
 #' Add codon counts to data
 #'
-#' Add the codon counts to input data. The codon counts is the frequency of
-#' each of the 64 codons in the input data frame
-#'
-#' @param datos: A data frame with at least the following variables
+#' @param datos A data frame with at least the following variables
 #' \describe{
 #' \item{gene_id}{id, to identify each particular secuence}
 #' \item{coding}{DNA, coding sequence in frame}
 #' }
+#'
+#' Add the codon counts to input data. The codon counts is the frequency of
+#' each of the 64 codons in the input data frame
 #'
 #' @return a tibble with the codon counts as columns append to the input tibble
 #' the columns are named with c_CODN (i.e c_AAA, ..., c_TTT)

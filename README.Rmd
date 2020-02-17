@@ -9,6 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
+  dpi=300,
   out.width = "100%"
 )
 ```
@@ -16,6 +17,7 @@ knitr::opts_chunk$set(
 # optimalcodonR
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
 <!-- badges: end -->
 
 The goal of optimalcodonR is to ...
@@ -36,26 +38,29 @@ devtools::install_github("santiago1234/optimalcodonR")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to optimize the gene expression of 
+the following gene:
 
 ```{r example}
-#library(optimalcodonR)
-## basic example code
-## TODO
+library(optimalcodonR)
+cat(test_seq)
 ```
+
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
+```{r optimization}
+sequence <- training$coding[27]
+result <- optimizer(sequence, specie = "mouse", n_iterations = 30, make_more_optimal = T)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+## Visualizing the results
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r viz}
+visualize_evolution(result)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+
+```{r viz2}
+visualize_evolution(result, draw_heatmap = F)
+```
