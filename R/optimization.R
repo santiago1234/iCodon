@@ -2,7 +2,7 @@
 #'
 #' @param sequence_to_optimize character, coding DNA sequence from start codon to
 #' stop codon
-#' @param stability_predictor function, mRNA stability predictor
+#' @param specie character, species
 #' @param n_iterations integer, number of evolution iterations
 #' @param make_more_optimal logical, If true the sequence is optimized, if false
 #' is is deoptimized (less optimal)
@@ -13,11 +13,15 @@
 #' @examples
 #' suppressMessages(optimizer(test_seq, n_iterations = 1))
 optimizer <- function(sequence_to_optimize,
-                      stability_predictor = predict_stability,
+                      specie = "human",
                       n_iterations = 100,
                       make_more_optimal = T) {
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize)
   validate_sequence(sequence_to_optimize) # sanity check
+
+  # initialize the mRNA stabilitiy predictor
+  stability_predictor <- predict_stability(specie)
+
   # initialize function for optimization
   # sample codon according to optimality
   if (make_more_optimal) {
@@ -30,6 +34,7 @@ optimizer <- function(sequence_to_optimize,
     codon_sampling_distribution <- sampling_deoptimization
     selector <- selection(stability_predictor, optimization = make_more_optimal)
   }
+
 
   # create the sampling function
   sampling_function <- sample_synonimous_codon(codon_sampling_distribution)

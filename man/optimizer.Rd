@@ -6,7 +6,7 @@
 \usage{
 optimizer(
   sequence_to_optimize,
-  stability_predictor = predict_stability,
+  specie = "human",
   n_iterations = 100,
   make_more_optimal = T
 )
@@ -15,7 +15,7 @@ optimizer(
 \item{sequence_to_optimize}{character, coding DNA sequence from start codon to
 stop codon}
 
-\item{stability_predictor}{function, mRNA stability predictor}
+\item{specie}{character, species}
 
 \item{n_iterations}{integer, number of evolution iterations}
 

@@ -36,13 +36,13 @@ selection <- function(stability_predictor, optimization = TRUE) {
     # returns: sequence with the highest fitness as defined by the predicted
     # stability
 
-    tibble::tibble(
+    hijas <- tibble::tibble(
       iteration = current_iteration,
       synonymous_seq = syn_daughters
-    ) %>%
-      dplyr::mutate(
-        predicted_stability = purrr::map_dbl(.data$synonymous_seq, stability_predictor)
-      ) %>%
-      artificial_selector()
+    )
+    hijas$predicted_stability <- stability_predictor(hijas$synonymous_seq)
+
+    artificial_selector(hijas)
+
   }
 }

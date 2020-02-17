@@ -2,25 +2,24 @@
 % Please edit documentation in R/predict-stability.R
 \name{predict_stability}
 \alias{predict_stability}
-\title{Predict mRNA stability}
+\title{Predict mRNA stability functional factory}
 \usage{
-predict_stability(secuencias, specie)
+predict_stability(specie)
 }
 \arguments{
-\item{secuencias}{character, a vector of dna sequences to predict. If
-more than one sequence is supplied, then the sequences should be unique. (No
-repeated sequences)}
-
 \item{specie}{character: one of human, mouse, fish, or xenopus}
 }
 \value{
 
 }
 \description{
-This function predicts the mRNA stability of the given sequences in the corresponding
-specie. The prediction is generated with the model: \code{mrna_stability_model}
+This function will generate a function that predicts the mRNA stability of the
+given species in the input sequences The prediction is generated with the model:
+\code{mrna_stability_model}. The output function will take as input a set of
+dna sequences (vector) these sequences should not contain repeated elements
 }
 \examples{
-# predict some sequences in fish
-predict_stability("ATGCCCGGG", "fish")
+predictor_fish <- predict_stability("fish")
+some_seqs <- testing$coding[1:3]
+predicted_stability <- predictor_fish(some_seqs)
 }

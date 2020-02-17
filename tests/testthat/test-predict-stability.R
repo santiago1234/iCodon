@@ -9,8 +9,8 @@ test_that("correct predictions", {
 
   # drop duplicate sequences in case there is
   human_data <- human_data[!duplicated(human_data$coding), ]
-
-  human_data$prediction <- predict_stability(human_data$coding, specie = "human")
+  predictor_human <- predict_stability("human")
+  human_data$prediction <- predictor_human(human_data$coding)
 
   f_corr <- cor(human_data$prediction, human_data$decay_rate)**2
 
