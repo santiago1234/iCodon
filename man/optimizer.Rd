@@ -8,7 +8,9 @@ optimizer(
   sequence_to_optimize,
   specie = "human",
   n_iterations = 100,
-  make_more_optimal = T
+  make_more_optimal = T,
+  mutation_Rate = 0.4,
+  n_Daughters = 3
 )
 }
 \arguments{
@@ -19,7 +21,12 @@ stop codon}
 
 \item{n_iterations}{integer, number of evolution iterations}
 
-\item{make_more_optimal}{logical, If true the sequence is optimized, if false
+\item{make_more_optimal}{logical, If true the sequence is optimized, if false}
+
+\item{mutation_Rate}{doblue, number of mutation to introduce at eact iteration
+given as a probability (1 = max (mutate all positions), 0 = min (no mutations))}
+
+\item{n_Daughters}{integer, number of child sequences to explore at each iteration
 is is deoptimized (less optimal)}
 }
 \value{

@@ -39,10 +39,10 @@ What is special about using `README.Rmd` instead of just `README.md`? You can in
 
 ``` r
 sequence <- test_seq
-result <- optimizer(sequence, specie = "mouse", n_iterations = 30, make_more_optimal = T)
+result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_optimal = T)
 #> optimizing sequence (more optimal)
 #> starting genetic algorithm ...
-#> 2.3.4.5.6.7.8.9.10.11.12.13.14.15.16.17.18.19.20.21.22.23.24.25.26.27.28.29.30.
+#> 2.3.4.5.6.7.8.9.10.
 ```
 
 Visualizing the results

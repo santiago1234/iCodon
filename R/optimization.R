@@ -5,6 +5,9 @@
 #' @param specie character, species
 #' @param n_iterations integer, number of evolution iterations
 #' @param make_more_optimal logical, If true the sequence is optimized, if false
+#' @param mutation_Rate doblue, number of mutation to introduce at eact iteration
+#' given as a probability (1 = max (mutate all positions), 0 = min (no mutations))
+#' @param n_Daughters integer, number of child sequences to explore at each iteration
 #' is is deoptimized (less optimal)
 #'
 #' @return a [tibble][tibble::tibble-package], the best sequence at each iteration
@@ -15,7 +18,10 @@
 optimizer <- function(sequence_to_optimize,
                       specie = "human",
                       n_iterations = 100,
-                      make_more_optimal = T) {
+                      make_more_optimal = T,
+                      mutation_Rate = .4,
+                      n_Daughters = 3
+                      ) {
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize)
   validate_sequence(sequence_to_optimize) # sanity check
 
@@ -43,8 +49,8 @@ optimizer <- function(sequence_to_optimize,
   evolucionador <- evolution(
     starting_sequence = sequence_to_optimize,
     sampling_distribution = sampling_function,
-    mutation_rate = .3,
-    n_daughters = 10 # how many daughters sequences are explored
+    mutation_rate = mutation_Rate,
+    n_daughters = n_Daughters # how many daughters sequences are explored
   )
 
   message("starting genetic algorithm ...")

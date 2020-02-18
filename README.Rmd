@@ -52,7 +52,7 @@ What is special about using `README.Rmd` instead of just `README.md`? You can in
 
 ```{r optimization}
 sequence <- test_seq
-result <- optimizer(sequence, specie = "mouse", n_iterations = 30, make_more_optimal = T)
+result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_optimal = T)
 ```
 
 ## Visualizing the results
