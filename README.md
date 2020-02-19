@@ -55,7 +55,7 @@ visualize_evolution(result)
 <img src="man/figures/README-viz-1.png" width="100%" />
 
 ``` r
-visualize_evolution(result, draw_heatmap = F)
+plot_optimization(result)
 ```
 
 <img src="man/figures/README-viz2-1.png" width="100%" />

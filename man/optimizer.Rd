@@ -7,7 +7,7 @@
 optimizer(
   sequence_to_optimize,
   specie = "human",
-  n_iterations = 100,
+  n_iterations = 15,
   make_more_optimal = T,
   mutation_Rate = 0.4,
   n_Daughters = 3

@@ -106,3 +106,22 @@ count_codons <- function(secuencia) {
   tibble::tibble(codon = split_by_codons(secuencia)) %>%
     dplyr::count(.data$codon)
 }
+
+
+
+#' Pretty print DNA sequence
+#'
+#' adds a line break every 80 characters to pretty print the secuence on screen
+#'
+#' @inheritParams validate_sequence
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' cat(pretty_print_seq(test_seq))
+pretty_print_seq <- function(secuencia) {
+  gsub("(.{80})", "\\1 ", secuencia) %>%
+    stringr::str_replace_all(pattern = " ", replacement = "\n")
+}
+

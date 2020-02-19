@@ -63,5 +63,5 @@ visualize_evolution(result)
 
 
 ```{r viz2}
-visualize_evolution(result, draw_heatmap = F)
+plot_optimization(result)
 ```

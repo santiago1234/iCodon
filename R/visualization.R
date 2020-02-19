@@ -7,11 +7,73 @@ seq_to_positional_codon_frame <- function(secuencia) {
     )
 }
 
+#' Plot optimization path and mRNA stability level
+#'
+#' plots the optimization path and the mRNA stability level
+#'
+#' @param optimization_run tibble: the output result of \code{\link{optimizer}}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_optimization <- function(optimization_run) {
+  initial <- dplyr::filter(optimization_run, iteration == 1) %>%
+    dplyr::mutate(etiqueta = "initial sequence")
+
+
+  ending <- dplyr::filter(optimization_run, iteration == nrow(optimization_run)) %>%
+    dplyr::mutate(etiqueta = "optimized sequence")
+
+
+  trajectory <- dplyr::bind_rows(initial, ending)
+  label_pos <- initial$predicted_stability
+
+  testing %>%
+    ggplot2::ggplot(ggplot2::aes(x=.data$decay_rate)) +
+    ggplot2::geom_freqpoly(bins=50, color="darkblue") +
+    ggplot2::geom_point(
+      data = optimization_run,
+      ggplot2::aes(y=200, x=.data$predicted_stability, color=.data$iteration),
+      shape=18,
+      size=3
+    ) +
+    ggplot2::geom_rect(data=trajectory, mapping=ggplot2::aes(
+      xmin=min(.data$predicted_stability),x=NULL,
+      xmax=max(.data$predicted_stability),
+      ymin=0, ymax=450), fill="black", alpha=0.1) +
+    ggplot2::geom_line(
+      data = optimization_run,
+      ggplot2::aes(y=200, x=.data$predicted_stability, color=.data$iteration)
+    ) +
+    ggplot2::scale_x_continuous(expand = c(0,0)) +
+    ggplot2::scale_y_continuous(expand = c(0,0)) +
+    ggrepel::geom_text_repel(
+      data = initial,
+      ggplot2::aes(x=.data$predicted_stability, y=160, label=.data$etiqueta),
+      color="#132B43"
+    ) +
+    ggrepel::geom_text_repel(
+      data = ending,
+      ggplot2::aes(x=.data$predicted_stability, y=240, label=.data$etiqueta),
+      color="#56B1F7"
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(
+      x = "scaled decay rate",
+      title = "mRNA stability level",
+      color="iteration\nstep"
+    ) +
+    ggplot2::annotate("text", x = -2, y = 55, label = "distribution of \nendogenous genes", color="darkblue") +
+    ggplot2::annotate("text", x = label_pos, y = 430, label = "optimization trajectory")
+
+
+}
 
 #' Visualiztion tools
 #'
 #' Helper function to visualize the optimization
-#' @param optimization_run tibble: the output result of \code{\link{optimizer}}
+#' @inheritParams plot_optimization
 #' @param draw_heatmap logical: If true draws a heatmap, otherwise draws ... TODO
 #'
 #' @return plot: ggplot2 object
@@ -34,7 +96,14 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
       ggplot2::geom_tile() +
       ggplot2::scale_x_continuous(expand = c(0, 0)) +
       ggplot2::scale_y_continuous(expand = c(0, 0)) +
-      ggplot2::scale_fill_viridis_c(option = "C", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02))
+      ggplot2::scale_fill_viridis_c(option = "C", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02)) +
+      ggplot2::labs(
+        x = "codon position",
+        y = "iteration step\n(Genetic Algorithm)",
+        fill = "codon optimality\nlevel",
+        title = "Sequence Evolution",
+        subtitle = "Each change in color represents the introduction of synonymous codon change"
+      )
   } else {
     optimality_content_at_each_iteration %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$optimality, group = .data$iteration, color = .data$iteration)) +
@@ -43,3 +112,5 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
       ggplot2::theme_light()
   }
 }
+
+

@@ -25,7 +25,8 @@ Imports:
     tidyr,
     recipes (>= 0.1.9),
     glmnet (>= 3.0.2),
-    rlang
+    rlang,
+    ggrepel
 Suggests: 
     testthat,
     covr

@@ -17,11 +17,10 @@
 #' suppressMessages(optimizer(test_seq, n_iterations = 1))
 optimizer <- function(sequence_to_optimize,
                       specie = "human",
-                      n_iterations = 100,
+                      n_iterations = 15,
                       make_more_optimal = T,
                       mutation_Rate = .4,
-                      n_Daughters = 3
-                      ) {
+                      n_Daughters = 3) {
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize)
   validate_sequence(sequence_to_optimize) # sanity check
 
