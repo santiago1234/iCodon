@@ -41,5 +41,5 @@ server <- function(input, output) {
 
     plot_optimization(dataInput())
 
-  }, width = 600, height = 400)
+  }, width = 1000, height = 400)
 }

@@ -27,7 +27,8 @@ Imports:
     glmnet (>= 3.0.2),
     rlang,
     ggrepel,
-    shiny
+    shiny,
+    ggridges
 Suggests: 
     testthat,
     covr

@@ -19,55 +19,50 @@ seq_to_positional_codon_frame <- function(secuencia) {
 #' @examples
 plot_optimization <- function(optimization_run) {
   initial <- dplyr::filter(optimization_run, .data$iteration == 1) %>%
-    dplyr::mutate(etiqueta = "initial sequence")
+    dplyr::mutate(etiqueta = "initial\nsequence")
 
 
   ending <- dplyr::filter(optimization_run, .data$iteration == nrow(optimization_run)) %>%
-    dplyr::mutate(etiqueta = "optimized sequence")
+    dplyr::mutate(etiqueta = "optimized\nsequence")
 
 
   trajectory <- dplyr::bind_rows(initial, ending)
-  label_pos <- initial$predicted_stability
-
-  testing %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data$decay_rate)) +
-    ggplot2::geom_freqpoly(bins = 50, color = "darkblue") +
-    ggplot2::geom_point(
-      data = optimization_run,
-      ggplot2::aes(y = 200, x = .data$predicted_stability, color = .data$iteration),
-      shape = 18,
-      size = 3
+  ggplot2::ggplot(trajectory) +
+    ggridges::stat_density_ridges(
+      data = testing, aes(x = .data$decay_rate, y = 0, fill=factor(stat(quantile))),
+      geom = "density_ridges_gradient",
+      quantile_lines = TRUE,
+      quantiles = 10,
+      calc_ecdf = T,
+      color=NA
     ) +
-    ggplot2::geom_rect(data = trajectory, mapping = ggplot2::aes(
-      xmin = min(.data$predicted_stability), x = NULL,
-      xmax = max(.data$predicted_stability),
-      ymin = 0, ymax = 450
-    ), fill = "black", alpha = 0.1) +
-    ggplot2::geom_line(
-      data = optimization_run,
-      ggplot2::aes(y = 200, x = .data$predicted_stability, color = .data$iteration)
+    ggplot2::scale_fill_viridis_d(
+      name="mRNA stability\ndistribution\n(endogenous genes)\n",
+      labels = c(
+        "[0, 10)% Top unstable",
+        "[10, 20)%",
+        "[20, 30)%",
+        "[30, 40)%",
+        "[40, 50)%",
+        "[50, 60)%",
+        "[60, 70)%",
+        "[70, 80)%",
+        "[80, 90)%",
+        "[90, 100]% Top stable"
+      )
     ) +
-    ggplot2::scale_x_continuous(expand = c(0, 0)) +
-    ggplot2::scale_y_continuous(expand = c(0, 0)) +
-    ggrepel::geom_text_repel(
-      data = initial,
-      ggplot2::aes(x = .data$predicted_stability, y = 160, label = .data$etiqueta),
-      color = "#132B43"
-    ) +
-    ggrepel::geom_text_repel(
-      data = ending,
-      ggplot2::aes(x = .data$predicted_stability, y = 240, label = .data$etiqueta),
-      color = "#56B1F7"
+    ggplot2::geom_line(ggplot2::aes(x=.data$predicted_stability, y=.4)) +
+    ggplot2::geom_point(data = ending, ggplot2::aes(x=.data$predicted_stability, y=.4), shape=19, size=3) +
+    ggplot2::geom_point(data = optimization_run, ggplot2::aes(x=.data$predicted_stability, y=.4), shape=1, size=2) +
+    ggrepel::geom_text_repel(ggplot2::aes(x=.data$predicted_stability, y=.4, label=.data$etiqueta), size=7) +
+    ggplot2::labs(
+      x = "mRNA degradation rate (scaled)",
+      y = NULL,
+      subtitle = "Gene optimization trajectory"
     ) +
     ggplot2::theme_minimal() +
-    ggplot2::labs(
-      x = "scaled decay rate",
-      title = "mRNA stability level",
-      color = "iteration\nstep"
-    ) +
-    ggplot2::annotate("text", x = -2, y = 55, label = "distribution of \nendogenous genes", color = "darkblue") +
-    ggplot2::annotate("text", x = label_pos, y = 430, label = "optimization trajectory") +
-    ggplot2::theme(text = ggplot2::element_text(size = 17, family = "Helvetica"))
+    ggplot2::theme(axis.ticks.y = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), text = ggplot2::element_text(size=17))
+
 }
 
 #' Visualiztion tools
