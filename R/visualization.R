@@ -29,7 +29,7 @@ plot_optimization <- function(optimization_run) {
   trajectory <- dplyr::bind_rows(initial, ending)
   ggplot2::ggplot(trajectory) +
     ggridges::stat_density_ridges(
-      data = testing, ggplot2aes(x = .data$decay_rate, y = 0, fill=factor(stat(quantile))),
+      data = testing, ggplot2::aes(x = .data$decay_rate, y = 0, fill=factor(stat(quantile))),
       geom = "density_ridges_gradient",
       quantile_lines = TRUE,
       quantiles = 10,
