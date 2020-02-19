@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "santiagogmm@hotmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: TODO:
+Description: Manipulating gene expression by optimal codon choice
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -26,7 +26,8 @@ Imports:
     recipes (>= 0.1.9),
     glmnet (>= 3.0.2),
     rlang,
-    ggrepel
+    ggrepel,
+    shiny
 Suggests: 
     testthat,
     covr

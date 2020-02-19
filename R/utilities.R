@@ -10,14 +10,50 @@
 #' validate_sequence(test_seq)
 validate_sequence <- function(secuencia) {
   secuencia <- stringr::str_to_upper(secuencia)
-  stopifnot(nchar(secuencia) %% 3 == 0)
+
+  ## check the sequence is in frame ---------
+
+  if(!nchar(secuencia) %% 3 == 0) {
+
+    err_msg <- paste0(
+      "Secuence not in frame, sequence length is: ",
+      nchar(secuencia),
+      "  (not a multiple of 3)"
+    )
+    stop(err_msg)
+  }
+
+  ## check for valid characters ---------
 
   nucs_in_seq <-
     stringr::str_split(secuencia, "") %>%
     unlist() %>%
     unique()
 
-  stopifnot(all(nucs_in_seq %in% c("A", "C", "G", "T")))
+  invalid <- nucs_in_seq[!nucs_in_seq %in% c("A", "G", "T", "C")]
+
+  if (length(invalid) > 0) {
+
+    err_msg <- paste0(
+      "Invalid charcter(s) found: ",
+      invalid[1]
+    )
+    stop(err_msg)
+  }
+
+  ## give a warning when the sequence is too short  ---------
+  min_value <- 70
+  max_value <- 17000
+
+  if (nchar(secuencia) < min_value) {
+    warning("The sequence is too short, results might be inaccurate")
+  }
+
+  if (nchar(secuencia) > max_value) {
+    warning("The sequence is too short, results might be inaccurate")
+  }
+
+
 }
 
 
@@ -49,7 +85,7 @@ split_by_codons <- function(secuencia) {
 #' translate("ATGTTT")
 translate <- function(secuencia) {
   secuencia <- stringr::str_to_upper(secuencia)
-  validate_sequence(secuencia)
+  #validate_sequence(secuencia) calling this gives a bug
   split_by_codons(secuencia) %>%
     purrr::map_chr(function(x) optimalcodonR::gc_codons_to_amino[x]) %>%
     stringr::str_c(collapse = "")

@@ -4,7 +4,7 @@ testthat::test_that("test utils", {
   expect_error(validate_sequence("a"))
   expect_error(validate_sequence("AA"))
   expect_error(validate_sequence("AAN"))
-
+  expect_warning(validate_sequence("AAACCC"))
   # test codon split_by_codons
 
   spliter_seq <- split_by_codons(test_seq) %>%

@@ -18,11 +18,11 @@ seq_to_positional_codon_frame <- function(secuencia) {
 #'
 #' @examples
 plot_optimization <- function(optimization_run) {
-  initial <- dplyr::filter(optimization_run, iteration == 1) %>%
+  initial <- dplyr::filter(optimization_run, .data$iteration == 1) %>%
     dplyr::mutate(etiqueta = "initial sequence")
 
 
-  ending <- dplyr::filter(optimization_run, iteration == nrow(optimization_run)) %>%
+  ending <- dplyr::filter(optimization_run, .data$iteration == nrow(optimization_run)) %>%
     dplyr::mutate(etiqueta = "optimized sequence")
 
 
@@ -65,7 +65,8 @@ plot_optimization <- function(optimization_run) {
       color="iteration\nstep"
     ) +
     ggplot2::annotate("text", x = -2, y = 55, label = "distribution of \nendogenous genes", color="darkblue") +
-    ggplot2::annotate("text", x = label_pos, y = 430, label = "optimization trajectory")
+    ggplot2::annotate("text", x = label_pos, y = 430, label = "optimization trajectory") +
+    ggplot2::theme(text = ggplot2::element_text(size = 17, family = "Helvetica"))
 
 
 }
@@ -103,7 +104,8 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
         fill = "codon optimality\nlevel",
         title = "Sequence Evolution",
         subtitle = "Each change in color represents the introduction of synonymous codon change"
-      )
+      ) +
+      ggplot2::theme(text = ggplot2::element_text(size = 17, family = "Helvetica"))
   } else {
     optimality_content_at_each_iteration %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$optimality, group = .data$iteration, color = .data$iteration)) +
