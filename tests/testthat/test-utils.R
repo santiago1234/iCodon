@@ -47,5 +47,4 @@ test_that("pretty print dna", {
   prety_seq <- pretty_print_seq(seq_test)
   prety_seq_back_to_normal <- stringr::str_replace_all(prety_seq, "\n", "")
   expect_equal(prety_seq_back_to_normal, seq_test)
-
 })

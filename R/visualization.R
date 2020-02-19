@@ -30,45 +30,44 @@ plot_optimization <- function(optimization_run) {
   label_pos <- initial$predicted_stability
 
   testing %>%
-    ggplot2::ggplot(ggplot2::aes(x=.data$decay_rate)) +
-    ggplot2::geom_freqpoly(bins=50, color="darkblue") +
+    ggplot2::ggplot(ggplot2::aes(x = .data$decay_rate)) +
+    ggplot2::geom_freqpoly(bins = 50, color = "darkblue") +
     ggplot2::geom_point(
       data = optimization_run,
-      ggplot2::aes(y=200, x=.data$predicted_stability, color=.data$iteration),
-      shape=18,
-      size=3
+      ggplot2::aes(y = 200, x = .data$predicted_stability, color = .data$iteration),
+      shape = 18,
+      size = 3
     ) +
-    ggplot2::geom_rect(data=trajectory, mapping=ggplot2::aes(
-      xmin=min(.data$predicted_stability),x=NULL,
-      xmax=max(.data$predicted_stability),
-      ymin=0, ymax=450), fill="black", alpha=0.1) +
+    ggplot2::geom_rect(data = trajectory, mapping = ggplot2::aes(
+      xmin = min(.data$predicted_stability), x = NULL,
+      xmax = max(.data$predicted_stability),
+      ymin = 0, ymax = 450
+    ), fill = "black", alpha = 0.1) +
     ggplot2::geom_line(
       data = optimization_run,
-      ggplot2::aes(y=200, x=.data$predicted_stability, color=.data$iteration)
+      ggplot2::aes(y = 200, x = .data$predicted_stability, color = .data$iteration)
     ) +
-    ggplot2::scale_x_continuous(expand = c(0,0)) +
-    ggplot2::scale_y_continuous(expand = c(0,0)) +
+    ggplot2::scale_x_continuous(expand = c(0, 0)) +
+    ggplot2::scale_y_continuous(expand = c(0, 0)) +
     ggrepel::geom_text_repel(
       data = initial,
-      ggplot2::aes(x=.data$predicted_stability, y=160, label=.data$etiqueta),
-      color="#132B43"
+      ggplot2::aes(x = .data$predicted_stability, y = 160, label = .data$etiqueta),
+      color = "#132B43"
     ) +
     ggrepel::geom_text_repel(
       data = ending,
-      ggplot2::aes(x=.data$predicted_stability, y=240, label=.data$etiqueta),
-      color="#56B1F7"
+      ggplot2::aes(x = .data$predicted_stability, y = 240, label = .data$etiqueta),
+      color = "#56B1F7"
     ) +
     ggplot2::theme_minimal() +
     ggplot2::labs(
       x = "scaled decay rate",
       title = "mRNA stability level",
-      color="iteration\nstep"
+      color = "iteration\nstep"
     ) +
-    ggplot2::annotate("text", x = -2, y = 55, label = "distribution of \nendogenous genes", color="darkblue") +
+    ggplot2::annotate("text", x = -2, y = 55, label = "distribution of \nendogenous genes", color = "darkblue") +
     ggplot2::annotate("text", x = label_pos, y = 430, label = "optimization trajectory") +
     ggplot2::theme(text = ggplot2::element_text(size = 17, family = "Helvetica"))
-
-
 }
 
 #' Visualiztion tools
@@ -97,7 +96,7 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
       ggplot2::geom_tile() +
       ggplot2::scale_x_continuous(expand = c(0, 0)) +
       ggplot2::scale_y_continuous(expand = c(0, 0)) +
-      ggplot2::scale_fill_viridis_c(option = "C", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02)) +
+      ggplot2::scale_fill_viridis_c(option = "B", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02)) +
       ggplot2::labs(
         x = "codon position",
         y = "iteration step\n(Genetic Algorithm)",
@@ -114,5 +113,3 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
       ggplot2::theme_light()
   }
 }
-
-

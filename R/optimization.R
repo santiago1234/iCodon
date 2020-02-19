@@ -24,6 +24,9 @@ optimizer <- function(sequence_to_optimize,
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize)
   validate_sequence(sequence_to_optimize) # sanity check
 
+  # set a seed for reproducibility
+  set.seed(123)
+
   # initialize the mRNA stabilitiy predictor
   stability_predictor <- predict_stability(specie)
 

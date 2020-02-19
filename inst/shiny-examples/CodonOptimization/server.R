@@ -4,22 +4,30 @@ library(magrittr)
 
 # Define server logic ----
 server <- function(input, output) {
-  
+
   dataInput <- reactive({
     # This part runs the optimization algorithm
     # control of parameters for optimization
-    
+
     optimalcodonR::optimizer(
       sequence_to_optimize = input$open_readin_frame,
-      specie = input$specie, 
-      n_iterations = 7,
+      # if other vertebrate is choosen then use human
+      specie = ifelse(input$specie == "other specie (vertebrate)", "human", input$specie),
+      n_iterations = 5,
       n_Daughters = 7,
       make_more_optimal = ifelse(input$direction == "increased", T, F)
     )
   })
-  
-  
-  output$optimized_sequence <- renderText({ 
+
+
+  output$codon_optimization <- renderPlot({
+
+    visualize_evolution(dataInput())
+
+  }, width = 1000, height = 200)
+
+
+  output$optimized_sequence <- renderText({
     # get the best sequence
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
@@ -28,17 +36,10 @@ server <- function(input, output) {
     # add a line breake avery 100 characters
     paste("Optimized sequence:\n", best_seq)
   })
-  
-  
-  output$codon_optimization <- renderPlot({ 
-    
-    visualize_evolution(dataInput())
-    
-  }, width = 1000, height = 200)
-  
-  output$trajectory_optimization <- renderPlot({ 
-    
+
+  output$trajectory_optimization <- renderPlot({
+
     plot_optimization(dataInput())
-    
+
   }, width = 600, height = 400)
 }

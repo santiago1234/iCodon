@@ -13,8 +13,7 @@ validate_sequence <- function(secuencia) {
 
   ## check the sequence is in frame ---------
 
-  if(!nchar(secuencia) %% 3 == 0) {
-
+  if (!nchar(secuencia) %% 3 == 0) {
     err_msg <- paste0(
       "Secuence not in frame, sequence length is: ",
       nchar(secuencia),
@@ -33,7 +32,6 @@ validate_sequence <- function(secuencia) {
   invalid <- nucs_in_seq[!nucs_in_seq %in% c("A", "G", "T", "C")]
 
   if (length(invalid) > 0) {
-
     err_msg <- paste0(
       "Invalid charcter(s) found: ",
       invalid[1]
@@ -52,8 +50,6 @@ validate_sequence <- function(secuencia) {
   if (nchar(secuencia) > max_value) {
     warning("The sequence is too short, results might be inaccurate")
   }
-
-
 }
 
 
@@ -85,7 +81,7 @@ split_by_codons <- function(secuencia) {
 #' translate("ATGTTT")
 translate <- function(secuencia) {
   secuencia <- stringr::str_to_upper(secuencia)
-  #validate_sequence(secuencia) calling this gives a bug
+  # validate_sequence(secuencia) calling this gives a bug
   split_by_codons(secuencia) %>%
     purrr::map_chr(function(x) optimalcodonR::gc_codons_to_amino[x]) %>%
     stringr::str_c(collapse = "")
@@ -160,4 +156,3 @@ pretty_print_seq <- function(secuencia) {
   gsub("(.{80})", "\\1 ", secuencia) %>%
     stringr::str_replace_all(pattern = " ", replacement = "\n")
 }
-

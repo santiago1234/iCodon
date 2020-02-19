@@ -11,9 +11,9 @@ library(shiny)
 library(magrittr)
 
 ui <- fluidPage(
-  
+
   titlePanel("optimalcodonR"),
-  
+
   sidebarLayout(
     sidebarPanel(
       h2("Installation"),
@@ -27,57 +27,58 @@ ui <- fluidPage(
       br(),
       img(src = "algorithDraw.png", height = 150, width = 350),
       br(),
-      "Here I will put a link to the journal article ", 
+      "Here I will put a link to the journal article ",
       span("RStudio", style = "color:blue")
     ),
     mainPanel(
       h1("Manipulating gene expression by optimal codon choice"),
-      img(src = "genetic-code.png", height = 300, width = 500),
-      p("Shiny is a new package from RStudio that makes it ", 
-        em("incredibly easy "), 
+      img(src = "genetic-code.png", height = 180, width = 500),
+      p("Shiny is a new package from RStudio that makes it ",
+        em("incredibly easy "),
         "to build interactive web applications with R."),
       br(),
       p("For an introduction and live examples, visit the ",
-        a("Bazzini-lab homepage.", 
+        a("Bazzini-lab homepage.",
           href = "https://research.stowers.org/bazzinilab/index.html")),
       br(),
       h2("Features"),
       p("- Generate a synonymous sequence with increased or decreased gene expression level"),
-      p("- Evaluate the effect of synonymous codon variants on ", 
+      p("- Evaluate the effect of synonymous codon variants on ",
         strong("gene expression"))
     )
   ),
-  
-  
+
+
   # done layaout ------------------------------------------------------------
-  
+
   fluidRow(
-    
-    selectInput("specie", 
+
+    selectInput("specie",
                 label = "Choose a species",
-                choices = list("human", 
+                choices = list("human",
                                "mouse",
-                               "xenopus", 
-                               "fish"),
-                selected = "human"),
-    
-    selectInput("direction", 
+                               "xenopus",
+                               "fish",
+                               "other specie (vertebrate)"),
+                selected = "fish"),
+
+    selectInput("direction",
                 label = "increased or decreased gene expression?",
-                choices = list("increased", 
+                choices = list("increased",
                                "decreased"
                 ),
                 selected = "increased"),
-    
+
     textInput(
       "open_readin_frame",
       p("Enter a DNA coding sequence in frame from start codon to stop codon"),
       value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA")
   ),
-  
+
   mainPanel(
-    textOutput("optimized_sequence"),
     plotOutput("codon_optimization"),
+    textOutput("optimized_sequence"),
     plotOutput("trajectory_optimization")
-    
+
   )
 )

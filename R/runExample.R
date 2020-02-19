@@ -16,7 +16,7 @@ runExample <- function() {
   appDir <- system.file("shiny-examples", "CodonOptimization", package = "optimalcodonR")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `optimalcodonR`.",
-         call. = FALSE
+      call. = FALSE
     )
   }
 
