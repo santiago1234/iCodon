@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# optimalcodonR
+# optimalcodonR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
@@ -24,21 +24,16 @@ knitr::opts_chunk$set(
 
 The goal of optimalcodonR is to ...
 
-## Installation
+## :arrow_double_down: Installation
 
-You can install the released version of optimalcodonR from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("optimalcodonR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the released version of optimalcodonR from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("santiago1234/optimalcodonR")
 ```
-## Example
+
+## :book: Example
 
 This is a basic example which shows you how to optimize the gene expression of 
 the following gene:

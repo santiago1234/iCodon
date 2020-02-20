@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# optimalcodonR
+# optimalcodonR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
@@ -15,23 +15,17 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 The goal of optimalcodonR is to …
 
-## Installation
+## :arrow\_double\_down: Installation
 
 You can install the released version of optimalcodonR from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("optimalcodonR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("santiago1234/optimalcodonR")
 ```
 
-## Example
+## :book: Example
 
 This is a basic example which shows you how to optimize the gene
 expression of the following gene:
