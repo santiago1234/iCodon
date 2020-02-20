@@ -1,0 +1,16 @@
+citHeader("To cite optimalcodonR in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Manipulating gene expression by optimal codon choice",
+  author   = "Medina et al",
+  journal  = "in production",
+  year     = "2020",
+  volume   = ,
+  number   = ,
+  pages    = ,
+  url      = ,
+  textVersion = paste(
+
+  )
+)

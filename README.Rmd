@@ -24,6 +24,10 @@ knitr::opts_chunk$set(
 
 The goal of optimalcodonR is to ...
 
+### [Try our interactive web application!](http://maple:3838/smedina/CodonOptimization/)
+
+in production [Medina et al 2020](https://www.stowers.org/faculty/bazzini-lab)
+
 ## :arrow_double_down: Installation
 
 You can install the released version of optimalcodonR from [GitHub](https://github.com/) with:

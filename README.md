@@ -15,6 +15,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 The goal of optimalcodonR is to …
 
+### [Try our interactive web application\!](http://maple:3838/smedina/CodonOptimization/)
+
+in production [Medina et
+al 2020](https://www.stowers.org/faculty/bazzini-lab)
+
 ## :arrow\_double\_down: Installation
 
 You can install the released version of optimalcodonR from
