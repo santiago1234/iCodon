@@ -27,8 +27,8 @@ ui <- fluidPage(
       br(),
       img(src = "algorithDraw.png", height = 150, width = 350),
       br(),
-      "Here I will put a link to the journal article ",
-      span("RStudio", style = "color:blue")
+      a('Bazzini lab',
+        href="https://research.stowers.org/bazzinilab/index.html")
     ),
     mainPanel(
       h1("Manipulating gene expression by optimal codon choice"),
@@ -41,7 +41,7 @@ ui <- fluidPage(
         a("Medina et al. 2020",
           href = "https://research.stowers.org/bazzinilab/index.html")),
       br(),
-      h2("Possible use cases:"),
+      h2("Possible use cases"),
       p("- Generate a synonymous sequence with increased or decreased gene expression level"),
       p("- Predict the mRNA stability bassed on the codon content"),
       p('- Generate sequences showing a gradient of gene expression to explore phenotypic effects'),
@@ -83,7 +83,8 @@ ui <- fluidPage(
     plotOutput("codon_optimization"),
     plotOutput("trajectory_optimization"),
     h3("Optimized Sequence:"),
-    textOutput("optimized_sequence")
+    textOutput("optimized_sequence"),
+    h3("")
 
   )
 )
