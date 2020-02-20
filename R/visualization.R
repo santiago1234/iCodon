@@ -13,7 +13,8 @@ seq_to_positional_codon_frame <- function(secuencia) {
 #'
 #' @param optimization_run tibble: the output result of \code{\link{optimizer}}
 #'
-#' @return
+#' @importFrom stats quantile
+#' @return ggplot2 object
 #' @export
 #'
 #' @examples
@@ -27,7 +28,8 @@ plot_optimization <- function(optimization_run) {
 
 
   trajectory <- dplyr::bind_rows(initial, ending)
-  ggplot2::ggplot(trajectory) +
+
+  cool_plot <- ggplot2::ggplot(trajectory) +
     ggridges::stat_density_ridges(
       data = testing, ggplot2::aes(x = .data$decay_rate, y = 0, fill=factor(stat(quantile))),
       geom = "density_ridges_gradient",
@@ -39,7 +41,7 @@ plot_optimization <- function(optimization_run) {
     ggplot2::scale_fill_viridis_d(
       name="mRNA stability\ndistribution\n(endogenous genes)\n",
       labels = c(
-        "[0, 10)% Top unstable",
+        "[0, 10)%",
         "[10, 20)%",
         "[20, 30)%",
         "[30, 40)%",
@@ -48,7 +50,7 @@ plot_optimization <- function(optimization_run) {
         "[60, 70)%",
         "[70, 80)%",
         "[80, 90)%",
-        "[90, 100]% Top stable"
+        "[90, 100]%"
       )
     ) +
     ggplot2::geom_line(ggplot2::aes(x=.data$predicted_stability, y=.4)) +
@@ -58,10 +60,25 @@ plot_optimization <- function(optimization_run) {
     ggplot2::labs(
       x = "mRNA degradation rate (scaled)",
       y = NULL,
-      subtitle = "Gene optimization trajectory"
+      subtitle = "Gene optimization trajectory",
+      title = "Predicted mRNA stability"
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.ticks.y = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), text = ggplot2::element_text(size=17))
+
+  # add some annotation
+  # to indicate the top stable and unstable genes
+  cool_plot +
+    ggplot2::geom_label(data = data.frame(x = 1.8151971625381, y = 0.058024362949714,
+                                 label = "Top stable genes"),
+               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+               vjust = 0.5, colour = "black", family = "sans", fontface = "plain",
+               inherit.aes = FALSE, show.legend = FALSE, size=5) +
+    ggplot2::geom_label(data = data.frame(x = -1.8151971625381, y = 0.058024362949714,
+                                 label = "Top unstable genes"),
+               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+               vjust = 0.5, colour = "black", family = "sans", fontface = "plain",
+               inherit.aes = FALSE, show.legend = FALSE, size=5)
 
 }
 

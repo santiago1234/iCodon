@@ -69,8 +69,8 @@ ui <- fluidPage(
                 ),
                 selected = "increased"),
 
-    textInput(
-      "open_readin_frame",
+    textAreaInput(
+      "open_readin_frame", width = '400', height = '200',
       p("Enter a DNA coding sequence in frame from start codon to stop codon"),
       value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA")
   ),

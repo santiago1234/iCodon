@@ -44,12 +44,26 @@ validate_sequence <- function(secuencia) {
   max_value <- 17000
 
   if (nchar(secuencia) < min_value) {
-    warning("The sequence is too short, results might be inaccurate")
+    stop("The sequence is too short, results might be inaccurate")
   }
 
   if (nchar(secuencia) > max_value) {
-    warning("The sequence is too short, results might be inaccurate")
+    stop("The sequence is too short, results might be inaccurate")
   }
+
+  ## Premature stop codon maybe the sequence is not in frame  ---------
+  stop_codons <- c("TAG", "TAA", "TGA")
+
+  codones_en_seq <- split_by_codons(secuencia) %>%
+    utils::head(-1) # remove the stop codon (the last codon)
+
+  stop_codons_found <- codones_en_seq[codones_en_seq %in% stop_codons]
+
+  if (length(stop_codons_found) > 0) {
+    err_msg <- paste0("Secuence contains a premature stop codon: ", stop_codons_found[1])
+    stop(err_msg)
+  }
+
 }
 
 

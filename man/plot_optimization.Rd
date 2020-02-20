@@ -10,7 +10,7 @@ plot_optimization(optimization_run)
 \item{optimization_run}{tibble: the output result of \code{\link{optimizer}}}
 }
 \value{
-
+ggplot2 object
 }
 \description{
 plots the optimization path and the mRNA stability level

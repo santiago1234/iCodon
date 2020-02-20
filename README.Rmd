@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
 [![Codecov test coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of optimalcodonR is to ...
@@ -57,11 +58,11 @@ result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_opt
 
 ## Visualizing the results
 
-```{r viz}
+```{r viz, fig.height=3, fig.width=11}
 visualize_evolution(result)
 ```
 
 
-```{r viz2}
+```{r viz2, fig.height=5, fig.width=10}
 plot_optimization(result)
 ```
