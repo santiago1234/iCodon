@@ -33,16 +33,18 @@ ui <- fluidPage(
     mainPanel(
       h1("Manipulating gene expression by optimal codon choice"),
       img(src = "genetic-code.png", height = 180, width = 500),
-      p("Shiny is a new package from RStudio that makes it ",
-        em("incredibly easy "),
-        "to build interactive web applications with R."),
+      p("optimalcodonR is a tool to design synonymous mRNA variants to",
+         em("affecting gene expression levels" ),
+         "in vertebrates species."),
       br(),
-      p("For an introduction and live examples, visit the ",
-        a("Bazzini-lab homepage.",
+      p("in production ",
+        a("Medina et al. 2020",
           href = "https://research.stowers.org/bazzinilab/index.html")),
       br(),
-      h2("Features"),
+      h2("Possible use cases:"),
       p("- Generate a synonymous sequence with increased or decreased gene expression level"),
+      p("- Predict the mRNA stability bassed on the codon content"),
+      p('- Generate sequences showing a gradient of gene expression to explore phenotypic effects'),
       p("- Evaluate the effect of synonymous codon variants on ",
         strong("gene expression"))
     )
@@ -72,15 +74,16 @@ ui <- fluidPage(
     textAreaInput(
       "open_readin_frame", width = '400', height = '200',
       p("Enter a DNA coding sequence in frame from start codon to stop codon"),
-      value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA")
+      value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACTATGTGGAGCGGCGGAGCTGAGCAACAACACCCT")
   ),
 
-  submitButton(text = "Apply Changes"),
+  submitButton(text = "Submit"),
 
   mainPanel(
     plotOutput("codon_optimization"),
-    textOutput("optimized_sequence"),
-    plotOutput("trajectory_optimization")
+    plotOutput("trajectory_optimization"),
+    h3("Optimized Sequence:"),
+    textOutput("optimized_sequence")
 
   )
 )

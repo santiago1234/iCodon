@@ -34,7 +34,7 @@ server <- function(input, output) {
     best_seq <- datos$synonymous_seq[nrow(datos)]
     # TODO: write a functio to pretty print the sequence
     # add a line breake avery 100 characters
-    paste("Optimized sequence:\n", best_seq)
+    best_seq
   })
 
   output$trajectory_optimization <- renderPlot({

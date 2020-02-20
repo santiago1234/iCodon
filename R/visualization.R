@@ -72,12 +72,12 @@ plot_optimization <- function(optimization_run) {
     ggplot2::geom_label(data = data.frame(x = 1.8151971625381, y = 0.058024362949714,
                                  label = "Top stable genes"),
                mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-               vjust = 0.5, colour = "black", family = "sans", fontface = "plain",
+               vjust = 0.5, colour = "black",
                inherit.aes = FALSE, show.legend = FALSE, size=5) +
     ggplot2::geom_label(data = data.frame(x = -1.8151971625381, y = 0.058024362949714,
                                  label = "Top unstable genes"),
                mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-               vjust = 0.5, colour = "black", family = "sans", fontface = "plain",
+               vjust = 0.5, colour = "black",
                inherit.aes = FALSE, show.legend = FALSE, size=5)
 
 }
@@ -116,7 +116,7 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
         title = "Sequence Evolution",
         subtitle = "Each change in color represents the introduction of synonymous codon change"
       ) +
-      ggplot2::theme(text = ggplot2::element_text(size = 17, family = "Helvetica"))
+      ggplot2::theme(text = ggplot2::element_text(size = 17))
   } else {
     optimality_content_at_each_iteration %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$optimality, group = .data$iteration, color = .data$iteration)) +
