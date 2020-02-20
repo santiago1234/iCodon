@@ -75,6 +75,8 @@ ui <- fluidPage(
       value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA")
   ),
 
+  submitButton(text = "Apply Changes"),
+
   mainPanel(
     plotOutput("codon_optimization"),
     textOutput("optimized_sequence"),
