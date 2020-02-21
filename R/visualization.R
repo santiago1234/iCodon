@@ -77,7 +77,9 @@ plot_optimization <- function(optimization_run) {
   log_fc_half_life <- log2(ending$half_life / initial$half_life) %>%
     round(2)
 
-  cool_plot <- ggplot2::ggplot(trajectory) +
+  # make the plot -----------------------------------------------------------
+
+  ggplot2::ggplot(trajectory) +
     ggridges::stat_density_ridges(
       data = testing, ggplot2::aes(x = .data$half_life, y = 0, fill=factor(stat(quantile))),
       geom = "density_ridges_gradient",
@@ -86,7 +88,8 @@ plot_optimization <- function(optimization_run) {
       calc_ecdf = T,
       color=NA
     ) +
-    ggplot2::scale_x_continuous(limits = c(0, 15), breaks = c(0, 5, 10, 15), labels = function(x) paste0(x, " hrs")) +
+    ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0, 15), breaks = c(1,2,4, 6, 10, 15), labels = function(x) paste0(x, " hrs")) +
+    ggplot2::scale_y_continuous(expand = c(0, 0), breaks = c(.1, .2, .3)) +
     ggplot2::scale_fill_viridis_d(
       name="mRNA half-life\ndistribution\n(endogenous genes)\n",
       labels = c(
@@ -100,34 +103,46 @@ plot_optimization <- function(optimization_run) {
         "[70, 80)%",
         "[80, 90)%",
         "[90, 100]%"
-      )
+      ),
+      alpha = 7/8
     ) +
-    ggplot2::geom_line(ggplot2::aes(x=.data$half_life, y=.2)) +
     ggplot2::geom_point(data = ending, ggplot2::aes(x=.data$half_life, y=.2), shape=19, size=3) +
     ggplot2::geom_point(data = optimization_run, ggplot2::aes(x=.data$half_life, y=.2), shape=1, size=2) +
-    ggrepel::geom_text_repel(ggplot2::aes(x=.data$half_life, y=.2, label=.data$etiqueta), size=7) +
+    ggrepel::geom_text_repel(ggplot2::aes(x=.data$half_life, y=.2, label=.data$etiqueta), size=5) +
     ggplot2::labs(
-      x = "mRNA half-life",
+      x = "mRNA stability (half life)",
       y = NULL,
-      subtitle = "Gene optimization trajectory",
-      title = paste0("log2 optimized/wild-type = ", log_fc_half_life,  "    (prediction)")
+      title = paste0("log2 fold = ", log_fc_half_life,  "  (prediction)")
     ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(axis.ticks.y = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), text = ggplot2::element_text(size=17))
-
-  # add some annotation
-  # to indicate the top stable and unstable genes
-  cool_plot +
-    ggplot2::geom_label(data = data.frame(x = 1, y = 0.058024362949714,
-                                 label = "Top unstable genes"),
-               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-               vjust = 0.5, colour = "black",
-               inherit.aes = FALSE, show.legend = FALSE, size=5) +
-    ggplot2::geom_label(data = data.frame(x = 7, y = 0.058024362949714,
-                                 label = "Top stable genes"),
-               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-               vjust = 0.5, colour = "black",
-               inherit.aes = FALSE, show.legend = FALSE, size=5)
+    ggplot2::geom_text(data = data.frame(x = 2.2, y = 0.028024362949714,
+                                         label = "Top unstable\ngenes"),
+                       mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+                       vjust = 0.5, colour = "grey60",
+                       inherit.aes = FALSE, show.legend = FALSE, size=4) +
+    ggplot2::geom_text(data = data.frame(x = 7.5, y = 0.028024362949714,
+                                         label = "Top stable\ngenes"),
+                       mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+                       vjust = 0.5, colour = "grey60",
+                       inherit.aes = FALSE, show.legend = FALSE, size=4) +
+    ggplot2::geom_errorbar(
+      data = trajectory,
+      inherit.aes = F,
+      ggplot2::aes(x = half_life, ymin = 0, ymax = .2),
+      width=0,
+      linetype=2,
+      size = 1/5
+    ) +
+    ggplot2::theme(
+      panel.grid = ggplot2::element_blank(),
+      panel.background = ggplot2::element_blank(),
+      text = ggplot2::element_text(size = 16),
+      axis.title.x = ggplot2::element_text(size = 17, hjust = 1, color="grey40"),
+      axis.text.x = ggplot2::element_text(colour = "grey"),
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_line(size = 1/3, colour = "grey"),
+      legend.position = c(.9, .5)
+    )
 
 
 }

@@ -21,7 +21,10 @@ optimizer <- function(sequence_to_optimize,
                       make_more_optimal = T,
                       mutation_Rate = .4,
                       n_Daughters = 3) {
-  sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize)
+
+  sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize) %>%
+    stringr::str_replace_all("[\r\n ]" , "") # remove white spaces
+
   validate_sequence(sequence_to_optimize) # sanity check
 
   # set a seed for reproducibility
