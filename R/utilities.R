@@ -63,7 +63,6 @@ validate_sequence <- function(secuencia) {
     err_msg <- paste0("Secuence contains a premature stop codon: ", stop_codons_found[1])
     stop(err_msg)
   }
-
 }
 
 

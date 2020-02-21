@@ -34,17 +34,17 @@ unscale_decay_to_mouse <- function(scaled_decay_rate, return_hl = TRUE) {
   }
 
   decay_unscaled
-
 }
 
 
 #' Plot optimization path and mRNA stability level
 #'
-#' plots the optimization path and the mRNA stability level
+#' plots the optimization path and the mRNA stability level (half life)
 #'
 #' @param optimization_run tibble: the output result of \code{\link{optimizer}}
 #'
 #' @importFrom stats quantile
+#' @importFrom ggplot2 stat
 #' @return ggplot2 object
 #' @export
 #'
@@ -55,10 +55,9 @@ plot_optimization <- function(optimization_run) {
   optimization_run <-
     optimization_run %>%
     dplyr::mutate(
-      half_life = unscale_decay_to_mouse(.data$predicted_stability),
       # set a max treshold
-      half_life = purrr::map_dbl(.data$half_life, ~dplyr::if_else(condition = . > 15, true =  14, false = .))
-  )
+      half_life = purrr::map_dbl(.data$half_life, ~ dplyr::if_else(condition = . > 15, true = 14, false = .))
+    )
 
   # the same for the training
   testing$half_life <- unscale_decay_to_mouse(testing$decay_rate)
@@ -81,17 +80,17 @@ plot_optimization <- function(optimization_run) {
 
   ggplot2::ggplot(trajectory) +
     ggridges::stat_density_ridges(
-      data = testing, ggplot2::aes(x = .data$half_life, y = 0, fill=factor(stat(quantile))),
+      data = testing, ggplot2::aes(x = .data$half_life, y = 0, fill = factor(stat(quantile))),
       geom = "density_ridges_gradient",
       quantile_lines = TRUE,
       quantiles = 10,
       calc_ecdf = T,
-      color=NA
+      color = NA
     ) +
-    ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0, 15), breaks = c(1,2,4, 6, 10, 15), labels = function(x) paste0(x, " hrs")) +
+    ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0, 15), breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15), labels = function(x) paste0(x, " hrs")) +
     ggplot2::scale_y_continuous(expand = c(0, 0), breaks = c(.1, .2, .3)) +
     ggplot2::scale_fill_viridis_d(
-      name="mRNA half-life\ndistribution\n(endogenous genes)\n",
+      name = "mRNA half-life\ndistribution\n(endogenous genes)\n",
       labels = c(
         "[0, 10)%",
         "[10, 20)%",
@@ -104,47 +103,53 @@ plot_optimization <- function(optimization_run) {
         "[80, 90)%",
         "[90, 100]%"
       ),
-      alpha = 7/8
+      alpha = 7 / 8
     ) +
-    ggplot2::geom_point(data = ending, ggplot2::aes(x=.data$half_life, y=.2), shape=19, size=3) +
-    ggplot2::geom_point(data = optimization_run, ggplot2::aes(x=.data$half_life, y=.2), shape=1, size=2) +
-    ggrepel::geom_text_repel(ggplot2::aes(x=.data$half_life, y=.2, label=.data$etiqueta), size=5) +
+    ggplot2::geom_point(data = ending, ggplot2::aes(x = .data$half_life, y = .2), shape = 19, size = 3) +
+    ggplot2::geom_point(data = optimization_run, ggplot2::aes(x = .data$half_life, y = .2), shape = 1, size = 2) +
+    ggrepel::geom_text_repel(ggplot2::aes(x = .data$half_life, y = .2, label = .data$etiqueta), size = 5) +
     ggplot2::labs(
       x = "mRNA stability (half life)",
       y = NULL,
-      title = paste0("log2 fold = ", log_fc_half_life,  "  (prediction)")
+      title = paste0("log2 fold = ", log_fc_half_life, "  (prediction)")
     ) +
-    ggplot2::geom_text(data = data.frame(x = 2.2, y = 0.028024362949714,
-                                         label = "Top unstable\ngenes"),
-                       mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-                       vjust = 0.5, colour = "grey60",
-                       inherit.aes = FALSE, show.legend = FALSE, size=4) +
-    ggplot2::geom_text(data = data.frame(x = 7.5, y = 0.028024362949714,
-                                         label = "Top stable\ngenes"),
-                       mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-                       vjust = 0.5, colour = "grey60",
-                       inherit.aes = FALSE, show.legend = FALSE, size=4) +
+    ggplot2::geom_text(
+      data = data.frame(
+        x = 2.2, y = 0.028024362949714,
+        label = "Top unstable\ngenes"
+      ),
+      mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+      vjust = 0.5, colour = "grey60",
+      inherit.aes = FALSE, show.legend = FALSE, size = 4
+    ) +
+    ggplot2::geom_text(
+      data = data.frame(
+        x = 7.5, y = 0.028024362949714,
+        label = "Top stable\ngenes"
+      ),
+      mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+      vjust = 0.5, colour = "grey60",
+      inherit.aes = FALSE, show.legend = FALSE, size = 4
+    ) +
     ggplot2::geom_errorbar(
       data = trajectory,
       inherit.aes = F,
-      ggplot2::aes(x = half_life, ymin = 0, ymax = .2),
-      width=0,
-      linetype=2,
-      size = 1/5
+      ggplot2::aes(x = .data$half_life, ymin = 0, ymax = .2),
+      width = 0,
+      linetype = 2,
+      size = 1 / 5
     ) +
     ggplot2::theme(
       panel.grid = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank(),
       text = ggplot2::element_text(size = 16),
-      axis.title.x = ggplot2::element_text(size = 17, hjust = 1, color="grey40"),
+      axis.title.x = ggplot2::element_text(size = 17, hjust = 1, color = "grey40"),
       axis.text.x = ggplot2::element_text(colour = "grey"),
       axis.text.y = ggplot2::element_blank(),
       axis.ticks.y = ggplot2::element_blank(),
-      axis.ticks = ggplot2::element_line(size = 1/3, colour = "grey"),
+      axis.ticks = ggplot2::element_line(size = 1 / 3, colour = "grey"),
       legend.position = c(.9, .5)
     )
-
-
 }
 
 #' Visualiztion tools
@@ -168,11 +173,12 @@ visualize_evolution <- function(optimization_run, draw_heatmap = T) {
 
 
   if (draw_heatmap) {
+    max_iteration <- max(optimality_content_at_each_iteration$iteration)
     optimality_content_at_each_iteration %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$position, y = .data$iteration, fill = .data$optimality)) +
       ggplot2::geom_tile() +
       ggplot2::scale_x_continuous(expand = c(0, 0)) +
-      ggplot2::scale_y_continuous(expand = c(0, 0)) +
+      ggplot2::scale_y_continuous(expand = c(0, 0), breaks = c(1, max_iteration / 2, max_iteration), labels = c("initial\nsequence", "intermediate\nsequences", "optimized\nsequence")) +
       ggplot2::scale_fill_viridis_c(option = "B", limits = c(-.03, .03), oob = scales::squish, breaks = c(-.02, 0, .02)) +
       ggplot2::labs(
         x = "codon position",

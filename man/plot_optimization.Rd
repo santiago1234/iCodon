@@ -13,5 +13,5 @@ plot_optimization(optimization_run)
 ggplot2 object
 }
 \description{
-plots the optimization path and the mRNA stability level
+plots the optimization path and the mRNA stability level (half life)
 }

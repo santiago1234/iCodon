@@ -21,9 +21,8 @@ optimizer <- function(sequence_to_optimize,
                       make_more_optimal = T,
                       mutation_Rate = .4,
                       n_Daughters = 3) {
-
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize) %>%
-    stringr::str_replace_all("[\r\n ]" , "") # remove white spaces
+    stringr::str_replace_all("[\r\n ]", "") # remove white spaces
 
   validate_sequence(sequence_to_optimize) # sanity check
 
@@ -71,5 +70,9 @@ optimizer <- function(sequence_to_optimize,
     best_at_each_iteration[[i]] <- current_best
   }
 
-  dplyr::bind_rows(best_at_each_iteration)
+  dplyr::bind_rows(best_at_each_iteration) %>%
+    dplyr::mutate(
+      half_life = unscale_decay_to_mouse(.data$predicted_stability),
+      iteration = as.integer(.data$iteration)
+    )
 }

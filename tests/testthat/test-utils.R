@@ -2,10 +2,10 @@ testthat::test_that("test utils", {
   # validate sequence
   expect_equal(is.null(validate_sequence(test_seq)), TRUE)
   # not divisible by 3
-  expect_error(validate_sequence(paste0(test_seq,"a")))
-  expect_error(validate_sequence(paste0(test_seq,"aA")))
+  expect_error(validate_sequence(paste0(test_seq, "a")))
+  expect_error(validate_sequence(paste0(test_seq, "aA")))
 
-  expect_error(validate_sequence(paste0(test_seq,"%^&")))
+  expect_error(validate_sequence(paste0(test_seq, "%^&")))
 
   # sequence too short
   expect_error(validate_sequence("AAACCC"))

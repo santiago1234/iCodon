@@ -47,10 +47,6 @@ server <- function(input, output) {
     # make the output plot nicer
     # add the half-life for the user
     dataInput() %>%
-      dplyr::mutate(
-        half_life = unscale_decay_to_mouse(predicted_stability),
-        iteration = as.integer(iteration)
-      ) %>%
       dplyr::select(iteration, half_life, synonymous_seq)
   }, striped = TRUE)
 
