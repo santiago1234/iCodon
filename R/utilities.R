@@ -41,14 +41,14 @@ validate_sequence <- function(secuencia) {
 
   ## give a warning when the sequence is too short  ---------
   min_value <- 70
-  max_value <- 17000
+  max_value <- 43524
 
   if (nchar(secuencia) < min_value) {
     stop("The sequence is too short, results might be inaccurate")
   }
 
   if (nchar(secuencia) > max_value) {
-    stop("The sequence is too short, results might be inaccurate")
+    stop("The sequence is too long!")
   }
 
   ## Premature stop codon maybe the sequence is not in frame  ---------

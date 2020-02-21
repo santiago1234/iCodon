@@ -17,8 +17,7 @@ The goal of optimalcodonR is to …
 
 ### [Try our interactive web application\!](http://maple:3838/smedina/CodonOptimization/)
 
-in production [Medina et
-al 2020](https://www.stowers.org/faculty/bazzini-lab)
+in production [Medina et al 2020](https://www.biorxiv.org/)
 
 ## :arrow\_double\_down: Installation
 
@@ -62,7 +61,8 @@ visualize_evolution(result)
 
 ``` r
 plot_optimization(result)
-#> Picking joint bandwidth of 0.151
+#> Picking joint bandwidth of 0.262
+#> Warning: Removed 86 rows containing non-finite values (stat_density_ridges).
 ```
 
 <img src="man/figures/README-viz2-1.png" width="100%" />

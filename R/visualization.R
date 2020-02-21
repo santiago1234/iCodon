@@ -7,6 +7,37 @@ seq_to_positional_codon_frame <- function(secuencia) {
     )
 }
 
+#' Convert scaled decay rate to unscaled versio (half-life)
+#'
+#' For the purpose of training the model I scaled the decay rates to std = 1
+#' and mean = 0. This function puts the decay rate in the slam-seq mouse scale.
+#' So I can get back a half life
+#'
+#' @param scaled_decay_rate double: decay rate (observed or predicted value)
+#' @param return_hl logical: if true returns the half life else the decay rata (unscaled)
+#'
+#' @return half life
+#' @export
+#'
+#' @examples
+#' unscale_decay_to_mouse(-2)
+unscale_decay_to_mouse <- function(scaled_decay_rate, return_hl = TRUE) {
+
+  # check smedina/projectos/190108-mzt-rna-stability/results/19-04-30-PredictiveModelDecayAllSpecies/19-04-30-EDA/EDAanalysos.Rmd
+  mouse_mu <- -0.196103668871582
+  mouse_std <- 0.0853732703692994
+
+  decay_unscaled <- (scaled_decay_rate * mouse_std) + mouse_mu
+
+  if (return_hl) {
+    decay_unscaled <- -log(2) / decay_unscaled
+  }
+
+  decay_unscaled
+
+}
+
+
 #' Plot optimization path and mRNA stability level
 #'
 #' plots the optimization path and the mRNA stability level
@@ -19,6 +50,20 @@ seq_to_positional_codon_frame <- function(secuencia) {
 #'
 #' @examples
 plot_optimization <- function(optimization_run) {
+
+  # put the decay rate and predicted stability in half-life units
+  optimization_run <-
+    optimization_run %>%
+    dplyr::mutate(
+      half_life = unscale_decay_to_mouse(.data$predicted_stability),
+      # set a max treshold
+      half_life = purrr::map_dbl(.data$half_life, ~dplyr::if_else(condition = . > 15, true =  14, false = .))
+  )
+
+  # the same for the training
+  testing$half_life <- unscale_decay_to_mouse(testing$decay_rate)
+
+
   initial <- dplyr::filter(optimization_run, .data$iteration == 1) %>%
     dplyr::mutate(etiqueta = "initial\nsequence")
 
@@ -29,17 +74,21 @@ plot_optimization <- function(optimization_run) {
 
   trajectory <- dplyr::bind_rows(initial, ending)
 
+  log_fc_half_life <- log2(ending$half_life / initial$half_life) %>%
+    round(2)
+
   cool_plot <- ggplot2::ggplot(trajectory) +
     ggridges::stat_density_ridges(
-      data = testing, ggplot2::aes(x = .data$decay_rate, y = 0, fill=factor(stat(quantile))),
+      data = testing, ggplot2::aes(x = .data$half_life, y = 0, fill=factor(stat(quantile))),
       geom = "density_ridges_gradient",
       quantile_lines = TRUE,
       quantiles = 10,
       calc_ecdf = T,
       color=NA
     ) +
+    ggplot2::scale_x_continuous(limits = c(0, 15), breaks = c(0, 5, 10, 15), labels = function(x) paste0(x, " hrs")) +
     ggplot2::scale_fill_viridis_d(
-      name="mRNA stability\ndistribution\n(endogenous genes)\n",
+      name="mRNA half-life\ndistribution\n(endogenous genes)\n",
       labels = c(
         "[0, 10)%",
         "[10, 20)%",
@@ -53,15 +102,15 @@ plot_optimization <- function(optimization_run) {
         "[90, 100]%"
       )
     ) +
-    ggplot2::geom_line(ggplot2::aes(x=.data$predicted_stability, y=.4)) +
-    ggplot2::geom_point(data = ending, ggplot2::aes(x=.data$predicted_stability, y=.4), shape=19, size=3) +
-    ggplot2::geom_point(data = optimization_run, ggplot2::aes(x=.data$predicted_stability, y=.4), shape=1, size=2) +
-    ggrepel::geom_text_repel(ggplot2::aes(x=.data$predicted_stability, y=.4, label=.data$etiqueta), size=7) +
+    ggplot2::geom_line(ggplot2::aes(x=.data$half_life, y=.2)) +
+    ggplot2::geom_point(data = ending, ggplot2::aes(x=.data$half_life, y=.2), shape=19, size=3) +
+    ggplot2::geom_point(data = optimization_run, ggplot2::aes(x=.data$half_life, y=.2), shape=1, size=2) +
+    ggrepel::geom_text_repel(ggplot2::aes(x=.data$half_life, y=.2, label=.data$etiqueta), size=7) +
     ggplot2::labs(
-      x = "mRNA degradation rate (scaled)",
+      x = "mRNA half-life",
       y = NULL,
       subtitle = "Gene optimization trajectory",
-      title = "Predicted mRNA stability"
+      title = paste0("log2 optimized/wild-type = ", log_fc_half_life,  "    (prediction)")
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.ticks.y = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), text = ggplot2::element_text(size=17))
@@ -69,16 +118,17 @@ plot_optimization <- function(optimization_run) {
   # add some annotation
   # to indicate the top stable and unstable genes
   cool_plot +
-    ggplot2::geom_label(data = data.frame(x = 1.8151971625381, y = 0.058024362949714,
-                                 label = "Top stable genes"),
-               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
-               vjust = 0.5, colour = "black",
-               inherit.aes = FALSE, show.legend = FALSE, size=5) +
-    ggplot2::geom_label(data = data.frame(x = -1.8151971625381, y = 0.058024362949714,
+    ggplot2::geom_label(data = data.frame(x = 1, y = 0.058024362949714,
                                  label = "Top unstable genes"),
                mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
                vjust = 0.5, colour = "black",
+               inherit.aes = FALSE, show.legend = FALSE, size=5) +
+    ggplot2::geom_label(data = data.frame(x = 7, y = 0.058024362949714,
+                                 label = "Top stable genes"),
+               mapping = ggplot2::aes(x = .data$x, y = .data$y, label = .data$label), angle = 0L, lineheight = 1L, hjust = 0.5,
+               vjust = 0.5, colour = "black",
                inherit.aes = FALSE, show.legend = FALSE, size=5)
+
 
 }
 

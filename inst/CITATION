@@ -6,10 +6,10 @@ citEntry(
   author   = "Medina et al",
   journal  = "in production",
   year     = "2020",
-  volume   = ,
-  number   = ,
-  pages    = ,
-  url      = ,
+  volume   = " ",
+  number   = " ",
+  pages    = " ",
+  url      = " ",
   textVersion = paste(
 
   )
