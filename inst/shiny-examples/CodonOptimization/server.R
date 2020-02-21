@@ -42,4 +42,25 @@ server <- function(input, output) {
     plot_optimization(dataInput())
 
   }, width = 1000, height = 400)
+
+  output$table <- renderTable({
+    # make the output plot nicer
+    # add the half-life for the user
+    dataInput() %>%
+      dplyr::mutate(
+        half_life = unscale_decay_to_mouse(predicted_stability),
+        iteration = as.integer(iteration)
+      ) %>%
+      dplyr::select(iteration, half_life, synonymous_seq)
+  }, striped = TRUE)
+
+  output$downloadData <- downloadHandler(
+
+    filename = function() {
+      paste("optimization-", Sys.Date(), ".csv", sep="")
+    },
+    content = function(file) {
+      readr::write_csv(dataInput(), file)
+    }
+  )
 }

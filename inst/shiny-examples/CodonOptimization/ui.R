@@ -84,7 +84,9 @@ ui <- fluidPage(
     plotOutput("trajectory_optimization"),
     h3("Optimized Sequence:"),
     textOutput("optimized_sequence"),
-    h3("")
+    h3(""),
+    tableOutput("table"),
+    downloadLink("downloadData", "download optimization")
 
   )
 )
