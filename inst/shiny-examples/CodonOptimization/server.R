@@ -66,13 +66,6 @@ server <- function(input, output) {
   })
 
 
-  output$codon_optimization <- renderPlot({
-
-    visualize_evolution(dataInput())
-
-  }, width = 1000, height = 200)
-
-
   output$optimized_sequence <- renderText({
     # get the best sequence
     # the best sequence is the sequence at the last iteration
@@ -88,13 +81,6 @@ server <- function(input, output) {
     plot_optimization(dataInput())
 
   }, width = 1000, height = 400)
-
-  output$table <- renderTable({
-    # make the output plot nicer
-    # add the half-life for the user
-    dataInput() %>%
-      dplyr::select(iteration, half_life, synonymous_seq)
-  }, striped = TRUE)
 
   output$downloadData <- downloadHandler(
 
