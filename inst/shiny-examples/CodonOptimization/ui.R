@@ -77,8 +77,7 @@ ui <- fluidPage(
 
     textAreaInput(
       "open_readin_frame", width = '400', height = '200',
-      p("Enter a DNA coding sequence in frame from start codon to stop codon"),
-      value = "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACTATGTGGAGCGGCGGAGCTGAGCAACAACACCCT")
+      p("Enter a DNA coding sequence in frame from start codon to stop codon"))
   ),
 
   submitButton(text = "Apply Changes"),

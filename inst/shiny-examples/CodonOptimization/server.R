@@ -3,6 +3,7 @@ server <- function(input, output) {
 
   dataInput <- reactive({
 
+    req(input$open_readin_frame) # require use input to start
     # *******************************************
     ## NOTE: all this code enclosed in ** is to provide the
     ## feed-back to the user. If this code is  deleted the
