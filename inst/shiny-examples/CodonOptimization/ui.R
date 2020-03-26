@@ -8,10 +8,14 @@
 #
 
 library(shiny)
+library(shinyFeedback)
+library(optimalcodonR)
 library(magrittr)
+
 
 ui <- fluidPage(
 
+  useShinyFeedback(), # include ShinyFeedback
   titlePanel("optimalcodonR"),
 
   sidebarLayout(
@@ -53,7 +57,7 @@ ui <- fluidPage(
 
   # done layaout ------------------------------------------------------------
 
-  fluidRow(
+  fluidPage(
 
     selectInput("specie",
                 label = "Choose a species",

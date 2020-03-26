@@ -1,13 +1,50 @@
-library(shiny)
-library(optimalcodonR)
-library(magrittr)
-
 # Define server logic ----
 server <- function(input, output) {
 
   dataInput <- reactive({
+
+    # *******************************************
+    ## NOTE: all this code enclosed in ** is to provide the
+    ## feed-back to the user. If this code is  deleted the
+    ## with no problem app should work
+    ## provide user feeback for the squence
+    # format the sequence, remove spaces,tabs, etc.
+    secuencia <- input$open_readin_frame %>%
+      stringr::str_to_upper() %>%
+      stringr::str_replace_all("[\r\n ]", "")
+
+    # -> -> Case 1: Divisible by 3
+    event_1 <- nchar(secuencia) %% 3 == 0 # this is the test to pass
+    message_1 <- "The sequence length must be divisible by 3. Make sure your sequence is in the correct frame."
+    shinyFeedback::feedbackDanger("open_readin_frame", !event_1, message_1)
+    req(event_1)
+
+    # -> -> Case 2: Invalid characters
+    nucs_in_seq <-
+      stringr::str_split(secuencia, "") %>%
+      unlist() %>%
+      unique()
+    invalid <- nucs_in_seq[!nucs_in_seq %in% c("A", "G", "T", "C")]
+    event_2 <- length(invalid) == 0
+    message_2 <- paste0("Invalid charcter(s) found: ", invalid[1])
+    shinyFeedback::feedbackDanger("open_readin_frame", !event_2, message_2)
+    req(event_2)
+
+    # -> -> Case 3: Invalid Sequence Length
+    min_value <- 70
+    max_value <- 43524
+    seq_len <- nchar(secuencia)
+    event_3 <- (min_value < seq_len) & (seq_len < max_value)
+    shinyFeedback::feedbackDanger("open_readin_frame", !event_3, "Invalid sequence length. Sequence too short/long.")
+    req(event_3)
+
+
+    # *******************************************
+
+
     # This part runs the optimization algorithm
     # control of parameters for optimization
+
 
     optimalcodonR::optimizer(
       sequence_to_optimize = input$open_readin_frame,
