@@ -38,6 +38,13 @@ server <- function(input, output) {
     shinyFeedback::feedbackDanger("open_readin_frame", !event_3, "Invalid sequence length. Sequence too short/long.")
     req(event_3)
 
+    # -> -> Case 4/5: Warning: Starts with ATG
+    event_4 <- stringr::str_sub(secuencia, 1, 3) == "ATG"
+    shinyFeedback::feedbackWarning("open_readin_frame", !event_4, "The sequence does not start with ATG")
+
+    event_5 <- stringr::str_sub(secuencia, -3) %in% c("TAG", "TAA", "TGA")
+    shinyFeedback::feedbackWarning("open_readin_frame", !event_5, "The sequence does not end in a stop codon")
+
 
     # *******************************************
 

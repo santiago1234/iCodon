@@ -46,7 +46,7 @@ ui <- fluidPage(
           href = "https://www.biorxiv.org/")),
       br(),
       h2("Possible use cases"),
-      p("- Generate a synonymous sequence with increased or decreased gene expression level"),
+      p("- Generate a synonymous sequence with increased or decreased mRNA half-life"),
       p("- Predict the mRNA stability bassed on the codon content"),
       p('- Generate sequences showing a gradient of gene expression to explore phenotypic effects'),
       p("- Evaluate the effect of synonymous codon variants on ",
