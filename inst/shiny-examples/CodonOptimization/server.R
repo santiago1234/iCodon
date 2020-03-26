@@ -53,6 +53,7 @@ server <- function(input, output) {
     # This part runs the optimization algorithm
     # control of parameters for optimization
 
+    showNotification("Running optimization ...", type = "message")
 
     optimalcodonR::optimizer(
       sequence_to_optimize = input$open_readin_frame,
