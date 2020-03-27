@@ -39,17 +39,8 @@ server <- function(input, output) {
     shinyFeedback::feedbackDanger("open_readin_frame", !event_3, "Invalid sequence length. Sequence too short/long.")
     req(event_3)
 
-    # -> -> Case 4/5: Warning: Starts with ATG
-    event_4 <- stringr::str_sub(secuencia, 1, 3) == "ATG"
-    shinyFeedback::feedbackWarning("open_readin_frame", !event_4, "The sequence does not start with ATG")
-
-
+    # -> -> Case 5: Premature Stop codon
     stop_codons <- c("TAG", "TAA", "TGA")
-    event_5 <- stringr::str_sub(secuencia, -3) %in% stop_codons
-    shinyFeedback::feedbackWarning("open_readin_frame", !event_5, "The sequence does not end in a stop codon")
-
-
-    # -> -> Case 6: Premature Stop codon
     found_stop <-
       gsub("(.{3})", "\\1 ", secuencia) %>%
       stringr::str_split(" ") %>%
@@ -57,10 +48,15 @@ server <- function(input, output) {
       .[-length(.)] %>%
       utils::head(-1) %>%
       .[. %in% stop_codons]
-    event_6 <- length(found_stop) == 0
-    message_6 <- "Your sequence contains a premature stop codon. Maybe is not in the correct frame"
-    shinyFeedback::feedbackDanger("open_readin_frame", !event_6, message_6)
-    req(event_6)
+    event_5 <- length(found_stop) == 0
+    message_5 <- "Your sequence contains a premature stop codon. Maybe is not in the correct frame"
+    shinyFeedback::feedbackDanger("open_readin_frame", !event_5, message_5)
+    req(event_5)
+
+    # -> -> Case 6: Does not ends with ATG
+
+    event_6 <- stringr::str_sub(secuencia, -3) %in% stop_codons
+    shinyFeedback::feedbackWarning("open_readin_frame", !event_6, "The sequence does not end in a stop codon")
 
     # *******************************************
 
