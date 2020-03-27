@@ -33,7 +33,7 @@ ui <- fluidPage(
                 choices = list("human",
                                "mouse",
                                "xenopus",
-                               "fish",
+                               "zebrafish",
                                "other species (vertebrate)"),
                 selected = "mouse"),
 

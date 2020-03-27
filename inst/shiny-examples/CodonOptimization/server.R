@@ -6,8 +6,8 @@ server <- function(input, output) {
     req(input$open_readin_frame) # require use input to start
     # *******************************************
     ## NOTE: all this code enclosed in ** is to provide the
-    ## feed-back to the user. If this code is  deleted the
-    ## with no problem app should work
+    ## feed-back to the user. If this code is  deleted
+    ## without problem app should work normally
     ## provide user feeback for the squence
     # format the sequence, remove spaces,tabs, etc.
     secuencia <- input$open_readin_frame %>%
@@ -43,9 +43,24 @@ server <- function(input, output) {
     event_4 <- stringr::str_sub(secuencia, 1, 3) == "ATG"
     shinyFeedback::feedbackWarning("open_readin_frame", !event_4, "The sequence does not start with ATG")
 
-    event_5 <- stringr::str_sub(secuencia, -3) %in% c("TAG", "TAA", "TGA")
+
+    stop_codons <- c("TAG", "TAA", "TGA")
+    event_5 <- stringr::str_sub(secuencia, -3) %in% stop_codons
     shinyFeedback::feedbackWarning("open_readin_frame", !event_5, "The sequence does not end in a stop codon")
 
+
+    # -> -> Case 6: Premature Stop codon
+    found_stop <-
+      gsub("(.{3})", "\\1 ", secuencia) %>%
+      stringr::str_split(" ") %>%
+      unlist() %>%
+      .[-length(.)] %>%
+      utils::head(-1) %>%
+      .[. %in% stop_codons]
+    event_6 <- length(found_stop) == 0
+    message_6 <- "Your sequence contains a premature stop codon. Maybe is not in the correct frame"
+    shinyFeedback::feedbackDanger("open_readin_frame", !event_6, message_6)
+    req(event_6)
 
     # *******************************************
 
@@ -55,10 +70,14 @@ server <- function(input, output) {
 
     showNotification("Running optimization ...", type = "message")
 
+    specie_animal <- input$specie
+    specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
+    specie_animal <- ifelse(specie_animal == "other species (vertebrate)", yes = "human", no = specie_animal)
+
     optimalcodonR::optimizer(
       sequence_to_optimize = input$open_readin_frame,
       # if other vertebrate is choosen then use human
-      specie = ifelse(input$specie == "other specie (vertebrate)", "human", input$specie),
+      specie = specie_animal,
       n_iterations = 5,
       n_Daughters = 7,
       make_more_optimal = ifelse(input$direction == "increased", T, F)
