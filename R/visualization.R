@@ -70,6 +70,17 @@ plot_optimization <- function(optimization_run) {
   ending <- dplyr::filter(optimization_run, .data$iteration == nrow(optimization_run)) %>%
     dplyr::mutate(etiqueta = "optimized\nsequence")
 
+  # compute percentiles: What proportion of endegenous genes is less then the
+  # given half life?
+
+  initial_percentili <- mean(testing$half_life < initial$half_life) %>%
+    round(2)
+
+  ending_percentili <- mean(testing$half_life < ending$half_life) %>%
+    round(2)
+
+  initial$etiqueta <- paste0(initial$etiqueta, "\n", initial_percentili * 100, "%")
+  ending$etiqueta <- paste0(ending$etiqueta, "\n", ending_percentili * 100, "%")
 
   trajectory <- dplyr::bind_rows(initial, ending)
 
@@ -107,7 +118,7 @@ plot_optimization <- function(optimization_run) {
     ) +
     ggplot2::geom_point(data = ending, ggplot2::aes(x = .data$half_life, y = .2), shape = 19, size = 3) +
     ggplot2::geom_point(data = optimization_run, ggplot2::aes(x = .data$half_life, y = .2), shape = 1, size = 2) +
-    ggrepel::geom_text_repel(ggplot2::aes(x = .data$half_life, y = .2, label = .data$etiqueta), size = 5) +
+    ggrepel::geom_text_repel(ggplot2::aes(x = .data$half_life, y = .2, label = .data$etiqueta), size = 6, color = 'grey30') +
     ggplot2::labs(
       x = "mRNA stability (half life)",
       y = NULL,
