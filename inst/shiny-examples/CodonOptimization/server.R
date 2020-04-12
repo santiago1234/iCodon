@@ -64,20 +64,14 @@ server <- function(input, output) {
     # This part runs the optimization algorithm
     # control of parameters for optimization
 
-    showNotification("Running optimization ...", type = "message")
+    showNotification("Running optimization ...", type = "message", duration = 12)
 
     specie_animal <- input$specie
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
-    specie_animal <- ifelse(specie_animal == "other species (vertebrate)", yes = "human", no = specie_animal)
 
-    optimalcodonR::optimizer(
-      sequence_to_optimize = input$open_readin_frame,
-      # if other vertebrate is choosen then use human
-      specie = specie_animal,
-      n_iterations = 5,
-      n_Daughters = 7,
-      make_more_optimal = ifelse(input$direction == "increased", T, F)
-    )
+
+    optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal)
+
   })
 
 
@@ -85,17 +79,29 @@ server <- function(input, output) {
     # get the best sequence
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
-    best_seq <- datos$synonymous_seq[nrow(datos)]
-    # TODO: write a functio to pretty print the sequence
-    # add a line breake avery 100 characters
+    best_seq <- datos %>%
+      dplyr::filter(optmimization == "optimized", iteration == 7) %>%
+      dplyr::pull(synonymous_seq)
+
+    best_seq
+  })
+
+  output$deoptimized_sequence <- renderText({
+    # get the best sequence
+    # the best sequence is the sequence at the last iteration
+    datos <- dataInput()
+    best_seq <- datos %>%
+      dplyr::filter(optmimization == "deoptimized", iteration == 7) %>%
+      dplyr::pull(synonymous_seq)
+
     best_seq
   })
 
   output$trajectory_optimization <- renderPlot({
 
-    plot_optimization(dataInput())
+    viz_result_shiny(dataInput())
 
-  }, width = 1000, height = 400)
+  }, width = 800, height = 400)
 
   output$downloadData <- downloadHandler(
 

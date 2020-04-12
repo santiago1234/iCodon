@@ -16,34 +16,30 @@ library(magrittr)
 ui <- fluidPage(
   theme = shinythemes::shinytheme("flatly"),
   shinyFeedback::useShinyFeedback(), # include ShinyFeedback
-  titlePanel("optimalcodonR"),
+  titlePanel("Opticon: ab-initio design of coding sequences for custom stability and expression"),
 
-  p("optimalcodonR is a tool to design synonymous mRNA variants to",
-    em("affect gene expression levels" ),
-    "for vertebrates"),
+  p(
+    "opticon predicts the mRNA stability of any coding sequence based on its codon composition ",
+    "and then subsequently generates a ",
+    em("more stable (optimization) or more unstable (de-optimization) " ),
+    "variant that will encode for the same protein for vertebrates"),
   br(),
   p("For a description of the method check our paper: ",
     a("Medina et al. 2020 (in production)",
       href = "https://www.biorxiv.org/")),
+  p("opticon is also availables as an",
+    a("R package",
+      href = "https://github.com/santiago1234/optimalcodonR")),
 
   fluidPage(
 
     selectInput("specie",
-                label = "Choose a species",
+                label = "Choose a species (if your specie is not present choose the closest relative).",
                 choices = list("human",
                                "mouse",
                                "xenopus",
-                               "zebrafish",
-                               "other species (vertebrate)"),
+                               "zebrafish"),
                 selected = "mouse"),
-
-    selectInput("direction",
-                label = "increased or decreased gene expression?",
-                choices = list("increased",
-                               "decreased"
-                ),
-                selected = "increased"),
-
     textAreaInput(
       "open_readin_frame", width = '400', height = '100',
       p("Enter a DNA coding sequence in frame from start codon to stop codon"))
@@ -55,6 +51,8 @@ ui <- fluidPage(
     plotOutput("trajectory_optimization"),
     h3("Optimized Sequence:"),
     textOutput("optimized_sequence"),
+    h3("Deoptimized Sequence:"),
+    textOutput("deoptimized_sequence"),
     h3(""),
     downloadLink("downloadData", "download optimization results")
 

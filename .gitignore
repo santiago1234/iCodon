@@ -1,5 +1,6 @@
 inst/shiny-examples/CodonOptimization/rsconnect/
 .DS_Store
+rsconnect/
 
 .Rproj.user
 # History files

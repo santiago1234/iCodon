@@ -6,7 +6,8 @@ Authors@R:
            family = "Medina",
            role = c("aut", "cre"),
            email = "santiagogmm@hotmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "https://orcid.org/0000-0001-8448-3561
+"))
 Description: Manipulating gene expression by optimal codon choice
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -28,7 +29,8 @@ Imports:
     rlang,
     ggrepel,
     shiny,
-    ggridges
+    ggridges,
+    cowplot
 Suggests: 
     testthat,
     covr
