@@ -70,7 +70,7 @@ viz_result_shiny <- function(result) {
     ) %>%
     ggplot2::ggplot(aes(y = .data$half_life, x = .data$iteration, group = .data$optmimization)) +
     ggplot2::geom_line(alpha = .3) +
-    geom_point(aes(color = .data$optmimization2), size = 2) +
+    ggplot2::geom_point(aes(color = .data$optmimization2), size = 2) +
     ggrepel::geom_text_repel(ggplot2::aes(y = .data$half_life - .3, label = round(.data$half_life, 1))) +
     ggplot2::scale_y_log10(limits = c(1.5, 15), breaks = brk, labels = labs) +
     ggplot2::scale_x_continuous(breaks = 1:7, labels = c("initial", 2:6, "optimized/\ndeoptimized")) +
