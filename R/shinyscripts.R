@@ -65,19 +65,25 @@ viz_result_shiny <- function(result) {
 
   p_optimization <-
     result %>%
+    dplyr::mutate(
+      optmimization2 = purrr::map2_chr(.data$iteration, .data$optmimization, function(x, y) dplyr::if_else(x == 1, "initial", y))
+    ) %>%
     ggplot2::ggplot(aes(y = .data$half_life, x = .data$iteration, group = .data$optmimization)) +
     ggplot2::geom_line(alpha = .3) +
-    ggplot2::geom_text(ggplot2::aes(y = .data$half_life - .3, label = round(.data$half_life, 1))) +
+    geom_point(aes(color = .data$optmimization2), size = 2) +
+    ggrepel::geom_text_repel(ggplot2::aes(y = .data$half_life - .3, label = round(.data$half_life, 1))) +
     ggplot2::scale_y_log10(limits = c(1.5, 15), breaks = brk, labels = labs) +
     ggplot2::scale_x_continuous(breaks = 1:7, labels = c("initial", 2:6, "optimized/\ndeoptimized")) +
     ggplot2::labs(
       y = "half-life (hrs)",
-      title = "Optimization Path"
+      subtitle = "Optimization Path"
     ) +
+    scale_color_manual(values = c('blue', 'grey', 'red')) +
+    cowplot::theme_cowplot() +
     ggplot2::theme(
-      panel.grid = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_text(angle = 30, hjust = 1),
-      text = ggplot2::element_text(size = 15)
+      text = ggplot2::element_text(size = 15),
+      legend.position = 'none'
     )
 
 
@@ -85,11 +91,13 @@ viz_result_shiny <- function(result) {
     ggplot2::ggplot(aes(x = .data$half_life)) +
     ggplot2::geom_density(fill = "black", alpha = .8) +
     ggplot2::coord_flip() +
+    ggplot2::scale_y_continuous(expand = c(0, 0)) +
     ggplot2::scale_x_log10(limits = c(1.5, 15), breaks = brk, labels = labs) +
     ggplot2::labs(
       x = NULL,
       subtitle = "Endogenous genes\nhalf-life distribution"
     ) +
+    cowplot::theme_cowplot() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(), text = ggplot2::element_text(size = 15))
 
   # the following plot creates quantiles bassed on the endegenous genes
@@ -107,7 +115,7 @@ viz_result_shiny <- function(result) {
     ggplot2::ggplot(aes(x = .data$x)) +
     ggplot2::geom_ribbon(
       aes(ymin = 0, ymax = qs[1]),
-      fill = "#67a9cf", alpha = .5
+      fill = "blue"
     ) +
     ggplot2::geom_ribbon(
       aes(ymin = qs[1], ymax = qs[2]),
@@ -115,16 +123,18 @@ viz_result_shiny <- function(result) {
     ) +
     ggplot2::geom_ribbon(
       aes(ymin = qs[2], ymax = qs[3]),
-      fill = "#ef8a62"
+      fill = "red"
     ) +
     ggplot2::scale_y_log10(limits = c(1.5, 15)) +
     ggplot2::geom_text(
       data =  optimality,
-      aes(y = .data$quantile - .5, label = .data$label), nudge_x = .5,
+      aes(y = .data$quantile - .5, label = .data$label, color = .data$label), nudge_x = .5,
       size = 4
     ) +
+    ggplot2::scale_color_manual(values = c("black", "white", "black")) +
     ggplot2::theme_void() +
-    ggplot2::theme(text = ggplot2::element_text(size = 13))
+    ggplot2::theme(text = ggplot2::element_text(size = 13), legend.position = 'none')
+
 
   ## include a plot comparing log2fold change with respecto to initial sequence
   initial <- result %>%
@@ -140,11 +150,13 @@ viz_result_shiny <- function(result) {
       y = log2(.data$half_life / .data$initial_hl)
     )) +
     ggplot2::geom_point() +
+    ggplot2::geom_hline(yintercept = 0, linetype = 2) +
     ggplot2::geom_errorbar(aes(ymin = 0, ymax = log2(.data$half_life / .data$initial_hl)), width = 0) +
     ggplot2::labs(
       y = "log2 fold change\n compared to initial seq",
       x = NULL
     ) +
+    cowplot::theme_cowplot() +
     ggplot2::theme(text = ggplot2::element_text(size = 13), axis.text.x = ggplot2::element_text(angle = 30, hjust = 1))
 
   cowplot::plot_grid(
