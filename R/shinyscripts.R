@@ -78,7 +78,7 @@ viz_result_shiny <- function(result) {
       y = "half-life (hrs)",
       subtitle = "Optimization Path"
     ) +
-    scale_color_manual(values = c('blue', 'grey', 'red')) +
+    ggplot2::scale_color_manual(values = c('blue', 'grey', 'red')) +
     cowplot::theme_cowplot() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(angle = 30, hjust = 1),
