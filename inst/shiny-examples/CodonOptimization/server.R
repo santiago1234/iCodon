@@ -27,7 +27,7 @@ server <- function(input, output) {
       unique()
     invalid <- nucs_in_seq[!nucs_in_seq %in% c("A", "G", "T", "C")]
     event_2 <- length(invalid) == 0
-    message_2 <- paste0("Invalid charcter(s) found: ", invalid[1])
+    message_2 <- paste0("Invalid character(s) found: ", invalid[1])
     shinyFeedback::feedbackDanger("open_readin_frame", !event_2, message_2)
     req(event_2)
 
@@ -49,7 +49,7 @@ server <- function(input, output) {
       utils::head(-1) %>%
       .[. %in% stop_codons]
     event_5 <- length(found_stop) == 0
-    message_5 <- "Your sequence contains a premature stop codon. Maybe is not in the correct frame"
+    message_5 <- "Your sequence contains a premature stop codon. Maybe is not in the correct frame?."
     shinyFeedback::feedbackDanger("open_readin_frame", !event_5, message_5)
     req(event_5)
 
@@ -64,7 +64,7 @@ server <- function(input, output) {
     # This part runs the optimization algorithm
     # control of parameters for optimization
 
-    showNotification("Running optimization ...", type = "message", duration = 12)
+    showNotification("Running optimization (It may take a minute)...", type = "message", duration = 22)
 
     specie_animal <- input$specie
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
