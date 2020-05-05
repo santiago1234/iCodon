@@ -19,12 +19,14 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
 [![Codecov test coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
+
+This is the R package accompanying our publication: **opticon**
 
 The goal of optimalcodonR is to ...
 
-### [Try our interactive web application!](http://maple:3838/smedina/CodonOptimization/)
+### [Try our interactive web application!](https://smedina.shinyapps.io/opticon/)
 
 in production [Medina et al 2020](https://www.biorxiv.org/)
 
