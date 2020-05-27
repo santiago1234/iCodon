@@ -16,7 +16,7 @@ library(magrittr)
 ui <- fluidPage(
   theme = shinythemes::shinytheme("flatly"),
   shinyFeedback::useShinyFeedback(), # include ShinyFeedback
-  titlePanel("Opticon: ab-initio design of coding sequences for custom stability and expression"),
+  titlePanel("Opticon: designing coding sequences for customized expression levels"),
 
   p(
     "Opticon predicts the mRNA stability of any coding sequence based on its codon composition ",
