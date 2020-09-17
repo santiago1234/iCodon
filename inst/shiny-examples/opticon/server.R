@@ -64,13 +64,17 @@ server <- function(input, output) {
     # This part runs the optimization algorithm
     # control of parameters for optimization
 
-    showNotification("Running optimization (It may take a minute)...", type = "message", duration = 22)
+    showNotification("Running optimization (It may take a minute)...", type = "message", duration = 60)
 
     specie_animal <- input$specie
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
 
 
-    optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal)
+    optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
+      dplyr::mutate(
+        codons_change = purrr::map_chr(synonymous_seq, function(x) codon_distance(x, input$open_readin_frame)),
+        nucs_change = purrr::map_chr(synonymous_seq, function(x) nucleotide_distance(x, input$open_readin_frame))
+      )
 
   })
 

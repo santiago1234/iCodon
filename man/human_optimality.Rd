@@ -4,7 +4,9 @@
 \name{human_optimality}
 \alias{human_optimality}
 \title{Codon optimality code for human}
-\format{A data frame with 64 rows and 3 variables:}
+\format{
+A data frame with 64 rows and 3 variables:
+}
 \usage{
 human_optimality
 }

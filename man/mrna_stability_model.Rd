@@ -4,7 +4,9 @@
 \name{mrna_stability_model}
 \alias{mrna_stability_model}
 \title{Predictive model of mRNA stability}
-\format{An object of class \code{elnet} (inherits from \code{glmnet}) of length 12.}
+\format{
+An object of class \code{elnet} (inherits from \code{glmnet}) of length 12.
+}
 \usage{
 mrna_stability_model
 }

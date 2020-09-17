@@ -4,7 +4,9 @@
 \name{gc_amino_to_codons_l}
 \alias{gc_amino_to_codons_l}
 \title{Genetic code amino -> codons}
-\format{list mapping amino acid to codons}
+\format{
+list mapping amino acid to codons
+}
 \usage{
 gc_amino_to_codons_l
 }

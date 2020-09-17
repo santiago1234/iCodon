@@ -4,7 +4,9 @@
 \name{sampling_deoptimization}
 \alias{sampling_deoptimization}
 \title{Sampling probabilities (deoptimization)}
-\format{list mapping amino acid to synonimous codon sampling probabilities}
+\format{
+list mapping amino acid to synonimous codon sampling probabilities
+}
 \usage{
 sampling_deoptimization
 }

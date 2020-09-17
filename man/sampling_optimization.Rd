@@ -4,7 +4,9 @@
 \name{sampling_optimization}
 \alias{sampling_optimization}
 \title{Sampling probabilities (optimization)}
-\format{list mapping amino acid to synonimous codon sampling probabilities}
+\format{
+list mapping amino acid to synonimous codon sampling probabilities
+}
 \usage{
 sampling_optimization
 }

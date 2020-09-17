@@ -4,7 +4,9 @@
 \name{gc_codons_to_amino}
 \alias{gc_codons_to_amino}
 \title{Genetic code codons -> amino acid}
-\format{named character vector}
+\format{
+named character vector
+}
 \usage{
 gc_codons_to_amino
 }

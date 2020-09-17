@@ -4,7 +4,9 @@
 \name{test_seq}
 \alias{test_seq}
 \title{DNA sequence}
-\format{character}
+\format{
+character
+}
 \usage{
 test_seq
 }

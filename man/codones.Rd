@@ -7,7 +7,9 @@
 #' \describe{
   \item{codon}{three letter nucleotide codon}
 }}
-\format{A tibble with 64 rows and 1 variable}
+\format{
+A tibble with 64 rows and 1 variable
+}
 \usage{
 codones
 }

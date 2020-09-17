@@ -4,7 +4,8 @@
 \name{testing}
 \alias{testing}
 \title{Testing data}
-\format{A data frame with 67,775 rows and 8 variables:
+\format{
+A data frame with 67,775 rows and 8 variables:
 \describe{
   \item{gene_id}{Ensembl gene id}
   \item{specie}{The specie one of: human, fish, mouse, or xenopus}
@@ -14,7 +15,8 @@
   \item{utrlenlog}{ size in log scale of the 5' UTR}
   \item{coding}{coding dna sequence in frame}
   \item{cdslenlog}{size in log scale of the coding sequence}
-}}
+}
+}
 \usage{
 testing
 }
