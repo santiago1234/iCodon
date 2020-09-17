@@ -129,6 +129,38 @@ codon_distance <- function(seq_variant1, seq_variant2, proportion = FALSE) {
 }
 
 
+#' Nucleotide distance
+#'
+#' compute the number of nucleotide differences between the two sequences
+#' assumes the sequences are same length and aligned
+#'
+#' @param seq_variant1 string: coding dna,  must be in frame
+#' @param seq_variant2 string: coding dna,  must be in frame
+#' @param proportion logical: if true, returns the distance as a proportion
+#' (1 = all codons are different, 0 = no differences)
+#' @return int, number of codon diferences
+#' @export
+#'
+#' @examples
+#' nucleotide_distance("ATGCTG", "ATGCTT")
+nucleotide_distance <- function(seq_variant1, seq_variant2, proportion = FALSE) {
+  if (length(seq_variant1) != length(seq_variant2)) {
+    warning("sequences are not the same length")
+  }
+
+  nucs1 <- strsplit(seq_variant1, "") %>% unlist()
+  nucs2 <- strsplit(seq_variant2, "") %>% unlist()
+  distance <- sum(nucs1 != nucs2)
+
+  if (proportion) {
+    distance <- distance / (nchar(seq_variant1) / 3)
+  }
+
+  distance
+}
+
+
+
 #' Count codons in DNA sequence
 #'
 #' Counts the frequency of each triplete in sequence, assumes
