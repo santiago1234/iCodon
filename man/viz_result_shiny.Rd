@@ -4,10 +4,10 @@
 \alias{viz_result_shiny}
 \title{Visualize optimization results in shiny}
 \usage{
-viz_result_shiny(result)
+viz_result_shiny(result, animal)
 }
 \arguments{
-\item{result}{tibble output of \code{\link{run_optimization_shinny}}}
+\item{result}{string one of (fish, human, mouse, or xenopus)}
 }
 \value{
 ggplot object

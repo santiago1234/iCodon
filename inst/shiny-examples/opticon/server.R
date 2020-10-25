@@ -103,7 +103,9 @@ server <- function(input, output) {
 
   output$trajectory_optimization <- renderPlot({
 
-    viz_result_shiny(dataInput())
+    specie_animal <- input$specie
+    specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
+    viz_result_shiny(dataInput(), specie_animal)
 
   }, width = 800, height = 400)
 

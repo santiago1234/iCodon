@@ -39,7 +39,7 @@ ui <- fluidPage(
                                "mouse",
                                "xenopus",
                                "zebrafish"),
-                selected = "mouse"),
+                selected = "human"),
     textAreaInput(
       "open_readin_frame", width = '400', height = '100',
       p("Enter a DNA coding sequence in frame from start codon to stop codon"))
