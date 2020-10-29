@@ -93,7 +93,7 @@ viz_result_shiny <- function(result, animal) {
     ggplot2::scale_y_continuous(expand = c(0, 0)) +
     ggplot2::labs(
       x = NULL,
-      subtitle = paste0(animal, " genes\n mRNA stability")
+      subtitle = paste0(animal, " genes\n mRNA optimality")
     ) +
     cowplot::theme_cowplot() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(), text = ggplot2::element_text(size = 15)) +

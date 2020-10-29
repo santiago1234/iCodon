@@ -7,7 +7,9 @@
 viz_result_shiny(result, animal)
 }
 \arguments{
-\item{result}{string one of (fish, human, mouse, or xenopus)}
+\item{result}{tibble output of \code{\link{run_optimization_shinny}}}
+
+\item{animal}{string one of (fish, human, mouse, or xenopus)}
 }
 \value{
 ggplot object
