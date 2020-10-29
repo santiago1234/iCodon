@@ -88,7 +88,7 @@
 #' \item Herzog, Veronika A., et al. "Thiol-linked alkylation of RNA to assess expression dynamics." Nature methods 14.12 (2017): 1198.
 #' }
 #'
-##' @format  A data frame with 67,775 rows and 8 variables:
+#' @format  A data frame with 67,775 rows and 8 variables:
 #' \describe{
 #'   \item{gene_id}{Ensembl gene id}
 #'   \item{specie}{The specie one of: human, fish, mouse, or xenopus}
@@ -122,3 +122,16 @@
 #' sequence information
 #' NOTE: see the file: data-raw/modeling.R where this model is trained
 "mrna_stability_model"
+
+#' Predictions for endogenous sequences
+#'
+#' NOTE: see the file: data-raw/predict_endogenous_sequences.R where i generate this data
+#' Predicted mRNA stability for endogenous genes in each species
+#' @format  A data frame with 34,290 rows and 3 variables:
+#' \describe{
+#'   \item{gene_id}{Ensembl gene id}
+#'   \item{specie}{The specie one of: human, fish, mouse, or xenopus}
+#'   \item{optimality}{predicted mRNA stability}
+#' }
+"optipred"
+
