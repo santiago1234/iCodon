@@ -7,6 +7,9 @@
 #' @param make_more_optimal logical, If true the sequence is optimized, if false
 #' @param mutation_Rate doblue, number of mutation to introduce at eact iteration
 #' given as a probability (1 = max (mutate all positions), 0 = min (no mutations))
+#' @param max_abs_val A maximum value (absolute value) such that the sequences
+#' cannot go beyond that value. Infinite is used as default, in this case there is not
+#' a limit for the sequences
 #' @param n_Daughters integer, number of child sequences to explore at each iteration
 #' is is deoptimized (less optimal)
 #'
@@ -20,6 +23,7 @@ optimizer <- function(sequence_to_optimize,
                       n_iterations = 15,
                       make_more_optimal = T,
                       mutation_Rate = .4,
+                      max_abs_val = Inf,
                       n_Daughters = 3) {
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize) %>%
     stringr::str_replace_all("[\r\n ]", "") # remove white spaces
@@ -66,7 +70,17 @@ optimizer <- function(sequence_to_optimize,
     message(paste0(i, "."), appendLF = FALSE)
 
     hijas_mutantes <- evolucionador(current_seq = current_best$synonymous_seq)
-    current_best <- selector(hijas_mutantes, i)
+
+
+    # check if the sequences have gone beyond the value max_abs_val
+    # in case this case we will keep always the previous sequence
+    current_best_tmp <- selector(hijas_mutantes, i)
+    if (abs(current_best_tmp$predicted_stability) < max_abs_val) {
+      current_best <- current_best_tmp
+      # update the iteration
+    } else {
+      current_best$iteration <- current_best$iteration + 1
+    }
     best_at_each_iteration[[i]] <- current_best
   }
 

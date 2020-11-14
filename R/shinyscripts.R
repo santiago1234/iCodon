@@ -10,12 +10,17 @@
 #'
 #' @examples
 run_optimization_shinny <- function(secuencia, animal) {
+
+  # the maximum values such that sequences cannot go beyond that
+  valor_maximo <- 1.5
+
   res_up <- optimizer(
     sequence_to_optimize = secuencia,
     specie = animal,
     n_iterations = 10,
     n_Daughters = 10,
     mutation_Rate = 0.05,
+    max_abs_val = valor_maximo,
     make_more_optimal = T
   ) %>%
     dplyr::mutate(optmimization = "optimized")
@@ -26,6 +31,7 @@ run_optimization_shinny <- function(secuencia, animal) {
     n_iterations = 10,
     n_Daughters = 10,
     mutation_Rate = 0.05,
+    max_abs_val = valor_maximo,
     make_more_optimal = F
   ) %>%
     dplyr::mutate(optmimization = "deoptimized")

@@ -10,6 +10,7 @@ optimizer(
   n_iterations = 15,
   make_more_optimal = T,
   mutation_Rate = 0.4,
+  max_abs_val = Inf,
   n_Daughters = 3
 )
 }
@@ -25,6 +26,10 @@ stop codon}
 
 \item{mutation_Rate}{doblue, number of mutation to introduce at eact iteration
 given as a probability (1 = max (mutate all positions), 0 = min (no mutations))}
+
+\item{max_abs_val}{A maximum value (absolute value) such that the sequences
+cannot go beyond that value. Infinite is used as default, in this case there is not
+a limit for the sequences}
 
 \item{n_Daughters}{integer, number of child sequences to explore at each iteration
 is is deoptimized (less optimal)}
