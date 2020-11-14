@@ -75,13 +75,19 @@ optimizer <- function(sequence_to_optimize,
     # check if the sequences have gone beyond the value max_abs_val
     # in case this case we will keep always the previous sequence
     current_best_tmp <- selector(hijas_mutantes, i)
-    if (abs(current_best_tmp$predicted_stability) < max_abs_val) {
+
+    if (current_best_tmp$predicted_stability < max_abs_val & make_more_optimal) {
       current_best <- current_best_tmp
-      # update the iteration
+
+    } else if (current_best_tmp$predicted_stability > -1 * max_abs_val & !make_more_optimal) {
+      current_best <- current_best_tmp
+
     } else {
       current_best$iteration <- current_best$iteration + 1
+
     }
     best_at_each_iteration[[i]] <- current_best
+
   }
 
   dplyr::bind_rows(best_at_each_iteration) %>%
