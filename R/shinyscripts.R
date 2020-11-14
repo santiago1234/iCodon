@@ -12,7 +12,7 @@
 run_optimization_shinny <- function(secuencia, animal) {
 
   # the maximum values such that sequences cannot go beyond that
-  valor_maximo <- 1.5
+  valor_maximo <- 1
 
   res_up <- optimizer(
     sequence_to_optimize = secuencia,
@@ -23,7 +23,7 @@ run_optimization_shinny <- function(secuencia, animal) {
     max_abs_val = valor_maximo,
     make_more_optimal = T
   ) %>%
-    dplyr::mutate(optmimization = "optimized")
+    dplyr::mutate(optimization = "optimized")
 
   res_down <- optimizer(
     sequence_to_optimize = secuencia,
@@ -34,7 +34,7 @@ run_optimization_shinny <- function(secuencia, animal) {
     max_abs_val = valor_maximo,
     make_more_optimal = F
   ) %>%
-    dplyr::mutate(optmimization = "deoptimized")
+    dplyr::mutate(optimization = "deoptimized")
 
   result <- dplyr::bind_rows(res_up, res_down)
 
@@ -57,19 +57,19 @@ run_optimization_shinny <- function(secuencia, animal) {
 viz_result_shiny <- function(result, animal) {
 
   optipred_specie <- dplyr::filter(optipred, .data$specie == animal, optimality < 2.5, optimality > -2.5)
-  endo_qs <- quantile(optipred_specie$optimality)
+  endo_qs <- quantile(optipred_specie$optimality, probs = c(.02, .25, .50, .75, .98))
   # draw a helper tibble
   endo_qs_t <- tibble::tibble(per = names(endo_qs), qs = endo_qs, iteration = 10.7)
 
   p_optimization <-
     result %>%
     dplyr::mutate(
-      optmimization2 = purrr::map2_chr(.data$iteration, .data$optmimization, function(x, y) dplyr::if_else(x == 1, "initial", y))
+      optimization2 = purrr::map2_chr(.data$iteration, .data$optimization, function(x, y) dplyr::if_else(x == 1, "initial", y))
     ) %>%
-    ggplot2::ggplot(aes(y = .data$predicted_stability, x = .data$iteration, group = .data$optmimization)) +
+    ggplot2::ggplot(aes(y = .data$predicted_stability, x = .data$iteration, group = .data$optimization)) +
     ggplot2::geom_line(alpha = .3) +
-    ggplot2::geom_point(aes(color = .data$optmimization2), size = 2) +
-    ggrepel::geom_text_repel(ggplot2::aes(y = .data$predicted_stability - .3, label = round(.data$predicted_stability, 1))) +
+    ggplot2::geom_point(aes(color = .data$optimization2), size = 2) +
+    ggplot2::geom_text(ggplot2::aes(y = .data$predicted_stability - .1, label = round(.data$predicted_stability, 1))) +
     ggplot2::scale_x_continuous(breaks = 1:10, labels = c("initial", 2:9, "optimized/\ndeoptimized")) +
     ggplot2::labs(
       y = "mRNA stability (prediction)",
@@ -83,19 +83,20 @@ viz_result_shiny <- function(result, animal) {
       legend.position = 'none'
     ) +
     # drw the lines for the quantil in the endogenous genes distribution
-    ggplot2::geom_text(data = endo_qs_t, aes(x = .data$iteration, y = .data$qs, group = 1.5, label = per), color = "grey", size = 5) +
-    ggplot2::geom_hline(yintercept = endo_qs[1], color = "#2166ac", linetype = 3, size = 1/4) +
-    ggplot2::geom_hline(yintercept = endo_qs[2], color = "#4393c3", linetype = 3, size = 1/4) +
-    ggplot2::geom_hline(yintercept = endo_qs[3], color = "#92c5de", linetype = 3, size = 1/4) +
-    ggplot2::geom_hline(yintercept = endo_qs[4], color = "#f4a582", linetype = 3, size = 1/4) +
-    ggplot2::geom_hline(yintercept = endo_qs[5], color = "#b2182b", linetype = 3, size = 1/4)
+    ggplot2::geom_text(data = endo_qs_t, aes(x = .data$iteration, y = .data$qs - .07, group = 1.5, label = per), color = "grey", size = 6) +
+    ggplot2::geom_hline(yintercept = endo_qs[1], color = "#2c7bb6", linetype = 2, size = 1/4) +
+    ggplot2::geom_hline(yintercept = endo_qs[2], color = "#abd9e9", linetype = 2, size = 1/4) +
+    ggplot2::geom_hline(yintercept = endo_qs[3], color = "black", linetype = 2, size = 1/4) +
+    ggplot2::geom_hline(yintercept = endo_qs[4], color = "#fdae61", linetype = 2, size = 1/4) +
+    ggplot2::geom_hline(yintercept = endo_qs[5], color = "#d7191c", linetype = 2, size = 1/4) +
+    ggplot2::coord_cartesian(ylim = c(-1.2, 1.2))
 
 
 
   p_density <- optipred_specie %>%
     ggplot2::ggplot(aes(x = .data$optimality)) +
     ggplot2::geom_density(fill = "grey", color = NA, alpha = .8) +
-    ggplot2::coord_flip() +
+    ggplot2::coord_flip(xlim = c(-1.2, 1.2)) +
     ggplot2::scale_y_continuous(expand = c(0, 0)) +
     ggplot2::labs(
       x = NULL,
@@ -103,14 +104,14 @@ viz_result_shiny <- function(result, animal) {
     ) +
     cowplot::theme_cowplot() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(), text = ggplot2::element_text(size = 15)) +
-    ggplot2::geom_vline(xintercept = endo_qs[1], color = "#2166ac", linetype = 3, size = 1/2) +
-    ggplot2::geom_vline(xintercept = endo_qs[2], color = "#4393c3", linetype = 3, size = 1/2) +
-    ggplot2::geom_vline(xintercept = endo_qs[3], color = "#92c5de", linetype = 3, size = 1/2) +
-    ggplot2::geom_vline(xintercept = endo_qs[4], color = "#f4a582", linetype = 3, size = 1/2) +
-    ggplot2::geom_vline(xintercept = endo_qs[5], color = "#b2182b", linetype = 3, size = 1/2) +
-    ggplot2::annotate(geom="text", x=-1, y=.7, label="Non-optimal genes",
+    ggplot2::geom_vline(xintercept = endo_qs[1], color = "#2c7bb6", linetype = 2, size = 1/4) +
+    ggplot2::geom_vline(xintercept = endo_qs[2], color = "#abd9e9", linetype = 2, size = 1/4) +
+    ggplot2::geom_vline(xintercept = endo_qs[3], color = "black", linetype = 2, size = 1/4) +
+    ggplot2::geom_vline(xintercept = endo_qs[4], color = "#fdae61", linetype = 2, size = 1/4) +
+    ggplot2::geom_vline(xintercept = endo_qs[5], color = "#d7191c", linetype = 2, size = 1/4) +
+    ggplot2::annotate(geom="text", x=-.5, y=.5, label="Non-optimal genes",
                       color="blue", size = 7) +
-    ggplot2::annotate(geom="text", x=1, y=.7, label="Optimal genes",
+    ggplot2::annotate(geom="text", x=.5, y=.5, label="Optimal genes",
                       color="red", size = 7)
 
 

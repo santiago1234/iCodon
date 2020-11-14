@@ -64,17 +64,33 @@ server <- function(input, output) {
     # This part runs the optimization algorithm
     # control of parameters for optimization
 
-    showNotification("Running optimization (It may take a minute)...", type = "message", duration = 60)
+    showNotification("Running optimization (It may take a minute)...", type = "message", duration = 30)
 
     specie_animal <- input$specie
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
 
 
-    optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
+    results <-
+      optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
       dplyr::mutate(
         codons_change = purrr::map_chr(synonymous_seq, function(x) codon_distance(x, input$open_readin_frame)),
-        nucs_change = purrr::map_chr(synonymous_seq, function(x) nucleotide_distance(x, input$open_readin_frame))
+        nucleotides_change = purrr::map_chr(synonymous_seq, function(x) nucleotide_distance(x, input$open_readin_frame))
       )
+
+    # this section is just a message in case the input sequence is too optimal or
+    # non-optimal
+    initial_opt <-
+      results %>%
+      dplyr::filter(iteration == 1) %>%
+      dplyr::slice(1:1) %>%
+      dplyr::pull(.data$predicted_stability)
+
+    if (abs(initial_opt) > 1) showNotification("The input sequence is too optimal/non-optimal (unable to optimize)", duration = 60, type = "error", closeButton = T)
+
+
+
+    # output the main results table
+    results
 
   })
 
@@ -84,7 +100,7 @@ server <- function(input, output) {
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
     best_seq <- datos %>%
-      dplyr::filter(optmimization == "optimized", iteration == 7) %>%
+      dplyr::filter(optimization == "optimized", iteration == 7) %>%
       dplyr::pull(synonymous_seq)
 
     best_seq
@@ -95,7 +111,7 @@ server <- function(input, output) {
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
     best_seq <- datos %>%
-      dplyr::filter(optmimization == "deoptimized", iteration == 7) %>%
+      dplyr::filter(optimization == "deoptimized", iteration == 7) %>%
       dplyr::pull(synonymous_seq)
 
     best_seq

@@ -92,7 +92,6 @@ optimizer <- function(sequence_to_optimize,
 
   dplyr::bind_rows(best_at_each_iteration) %>%
     dplyr::mutate(
-      half_life = unscale_decay_to_mouse(.data$predicted_stability),
       iteration = as.integer(.data$iteration)
     )
 }

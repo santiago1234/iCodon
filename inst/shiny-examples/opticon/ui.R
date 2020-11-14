@@ -23,8 +23,7 @@ ui <- fluidPage(
     "and then subsequently generates a ",
     em("more stable (optimization) or more unstable (de-optimization) " ),
     "variant that will encode for the same protein. The model is optimized for several vertebrate genomes, that can be selected below."),
-  br(),
-  p("For a description of the method check our paper: ",
+  p("\nFor a description of the method check our paper: ",
     a("Medina et al. 2020 (in preparation)",
       href = "https://www.biorxiv.org/")),
   p("Opticon is also available as an",
@@ -41,9 +40,11 @@ ui <- fluidPage(
                                "zebrafish"),
                 selected = "human"),
     textAreaInput(
-      "open_readin_frame", width = '400', height = '100',
+      "open_readin_frame", width = '700', height = '100',
       p("Enter a DNA coding sequence in frame from start codon to stop codon"))
   ),
+  "\nExample sequence (copy and paste above):",
+  "ATGTGGAGCGGCGGAGCGGAGCAACAACATCCTAAAACCGATAAAAGTCACCGATGCAATGGCGTCGATTCTTCAAGAAGAAAAAACAGATCGCAACGGTGGCGATATGAAGTTAAAAAAACTGGGTGA",
 
   submitButton(text = "Run Opticon"),
 
