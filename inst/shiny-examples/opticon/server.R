@@ -100,7 +100,7 @@ server <- function(input, output) {
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
     best_seq <- datos %>%
-      dplyr::filter(optimization == "optimized", iteration == 7) %>%
+      dplyr::filter(optimization == "optimized", iteration == 10) %>%
       dplyr::pull(synonymous_seq)
 
     best_seq
@@ -111,7 +111,7 @@ server <- function(input, output) {
     # the best sequence is the sequence at the last iteration
     datos <- dataInput()
     best_seq <- datos %>%
-      dplyr::filter(optimization == "deoptimized", iteration == 7) %>%
+      dplyr::filter(optimization == "deoptimized", iteration == 10) %>%
       dplyr::pull(synonymous_seq)
 
     best_seq
