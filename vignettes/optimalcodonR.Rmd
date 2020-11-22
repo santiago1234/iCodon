@@ -1,0 +1,105 @@
+---
+title: "optimalcodonR"
+output: rmarkdown::html_vignette
+author: Santiago G. Medina
+vignette: >
+  %\VignetteIndexEntry{optimalcodonR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This documentation describes three use cases of this package.
+
+1. Compute the codon frequencies for a set of coding DNA sequences.
+2. Predict mRNA stability of a set of coding sequences using the model developed by Medina et al. 2020.
+3. Optimize mRNA stability with synonymous mutations.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(optimalcodonR)
+library(tidyverse)
+```
+
+
+## 1. Compute the codon frequencies for a set of coding DNA sequences
+
+Suppose you have a table containing a set of coding DNA sequences like the one shown next.
+
+````{r, echo=FALSE}
+set.seed(12)
+
+codin_seqs <- training %>% 
+  sample_n(100) %>% 
+  select(gene_id, coding) %>% 
+  filter(!duplicated(coding))
+
+````
+
+```{r}
+codin_seqs
+```
+
+If you wish to compute the codon-frequencies you can use the function `add_codon_counts`.
+
+```{r}
+ add_codon_counts(codin_seqs)
+```
+
+see the help `?add_codon_counts` for more information about this function.
+
+## 2. Predict mRNA stability for a coding sequence
+
+You can use the function `predict_stability` to predict the mRNA stability based on the codon sequence (Medina et al 2020).
+
+Positive values indicate stability, while negative values indicate instability.
+
+You need to specify a species. Possible species are:
+
+- *Homo sapiens* (human)
+- *Mus musculus* (mouse)
+- *Danio rerio* (fish)
+- *Xenopus laevis* (xenopus)
+
+
+```{r}
+predictor_human <- predict_stability(specie = "human")
+# Now you can pass any coding sequence to this function
+predictor_human("ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA")
+```
+
+If you have a table (see first example) you can add a column with the prediction
+for each sequence.
+
+```{r}
+codin_seqs$prediction_optimality <- predictor_human(codin_seqs$coding)
+
+select(codin_seqs, gene_id, prediction_optimality)
+```
+
+## 3. Optimize mRNA stability with synonymous mutations.
+
+
+To optimize mRNA stability you can use the function `optimizer`.
+
+
+```{r}
+a_seq <- "ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA"
+
+optimizer(
+  sequence_to_optimize = a_seq,
+  specie = "human", n_iterations = 10,
+  make_more_optimal = TRUE,
+  mutation_Rate = .1,
+  max_abs_val = 2,
+  n_Daughters = 4
+)
+```
+
+
+See the help `?optimizer` for information about the parameters.
