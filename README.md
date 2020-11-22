@@ -1,3 +1,5 @@
+Santiago G. Medina-Muñoz, Michay Diez, Luciana A Castellano, Qiushuang
+Wu, Ariel Bazzini
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -13,11 +15,19 @@ coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/b
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
-This is the R package accompanying our publication: **opticon**
+The regulation of messenger RNA (mRNA) stability substantially
+contributes to steady-state gene expression levels in all organisms.
+Codon composition is the most pervasive and impactful determinant of
+mRNA stability in vertebrates. We have developed Opticon, an algorithm
+for the *in silico* design of coding sequences customized to achieve
+desired target expression levels based on synonymous codon
+substitutions. Users can predict the mRNA stability of any coding
+sequence based on its codon composition and subsequently generate more
+stable (optimized) or unstable (de-optimized) variants encoding for the
+same protein. This tool will benefit basic biological research, as well
+as a wide range of biotechnology applications.
 
-The goal of optimalcodonR is to …
-
-### [Try our interactive web application\!](https://smedina.shinyapps.io/opticon/)
+### [Opticon web-application\!](https://smedina.shinyapps.io/opticon/)
 
 in production [Medina et al 2020](https://www.biorxiv.org/)
 
@@ -42,9 +52,6 @@ cat(test_seq)
 #> ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
 ``` r
 sequence <- test_seq
 result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_optimal = T)
@@ -61,10 +68,9 @@ visualize_evolution(result)
 
 <img src="man/figures/README-viz-1.png" width="100%" />
 
-``` r
-plot_optimization(result)
-#> Picking joint bandwidth of 0.262
-#> Warning: Removed 86 rows containing non-finite values (stat_density_ridges).
-```
+To see what else can be accomplished with this package see the help
+with:
 
-<img src="man/figures/README-viz2-1.png" width="100%" />
+``` r
+browseVignettes("optimalcodonR")
+```

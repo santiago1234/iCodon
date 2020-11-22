@@ -1,5 +1,6 @@
 ---
 output: github_document
+author: Santiago G. Medina-Muñoz, Michay Diez, Luciana A Castellano, Qiushuang Wu, Ariel Bazzini
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -23,11 +24,11 @@ knitr::opts_chunk$set(
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
-This is the R package accompanying our publication: **opticon**
 
-The goal of optimalcodonR is to ...
+The regulation of messenger RNA (mRNA) stability substantially contributes to steady-state gene expression levels in all organisms. Codon composition is the most pervasive and impactful determinant of mRNA stability in vertebrates.
+We have developed Opticon, an algorithm for the *in silico* design of coding sequences customized to achieve desired target expression levels based on synonymous codon substitutions. Users can predict the mRNA stability of any coding sequence based on its codon composition and subsequently generate more stable (optimized) or unstable (de-optimized) variants encoding for the same protein. This tool will benefit basic biological research, as well as a wide range of biotechnology applications. 
 
-### [Try our interactive web application!](https://smedina.shinyapps.io/opticon/)
+### [Opticon web-application!](https://smedina.shinyapps.io/opticon/)
 
 in production [Medina et al 2020](https://www.biorxiv.org/)
 
@@ -51,8 +52,6 @@ cat(test_seq)
 ```
 
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
 ```{r optimization}
 sequence <- test_seq
 result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_optimal = T)
@@ -65,6 +64,9 @@ visualize_evolution(result)
 ```
 
 
-```{r viz2, fig.height=5, fig.width=10}
-plot_optimization(result)
+To see what else can be accomplished with this package see the help with:
+
+```{r, eval=FALSE}
+browseVignettes("optimalcodonR")
 ```
+
