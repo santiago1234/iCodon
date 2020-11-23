@@ -1,7 +1,7 @@
 ---
 title: "optimalcodonR"
 output: rmarkdown::html_vignette
-author: Santiago G. Medina
+author: Santiago G. Medina-Muñoz
 vignette: >
   %\VignetteIndexEntry{optimalcodonR}
   %\VignetteEngine{knitr::rmarkdown}
@@ -23,7 +23,7 @@ This documentation describes three use cases of this package.
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(optimalcodonR)
-library(tidyverse)
+library(dplyr)
 ```
 
 
