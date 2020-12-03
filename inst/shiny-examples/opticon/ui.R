@@ -25,11 +25,10 @@ ui <- fluidPage(
     "variant that will encode for the same protein. The model is optimized for several vertebrate genomes, that can be selected below."),
   p("\nFor a description of the method check our paper: ",
     a("Medina et al. 2020 (in preparation)",
-      href = "https://www.biorxiv.org/")),
+      href = "https://www.biorxiv.org/"), "."),
   p("Opticon is also available as an",
     a("R package",
-      href = "https://github.com/santiago1234/optimalcodonR")),
-
+      href = "https://github.com/santiago1234/optimalcodonR"), "."),
   fluidPage(
 
     selectInput("specie",
@@ -44,7 +43,7 @@ ui <- fluidPage(
       p("Enter a DNA coding sequence in frame from start codon to stop codon"))
   ),
   "\nExample sequence (copy and paste above):",
-  "ATGTGGAGCGGCGGAGCGGAGCAACAACATCCTAAAACCGATAAAAGTCACCGATGCAATGGCGTCGATTCTTCAAGAAGAAAAAACAGATCGCAACGGTGGCGATATGAAGTTAAAAAAACTGGGTGA",
+  "ATGGATCGTGGTCAGCATCCTCCTGGGTGGGCCTGGCAGTGGCTTTCCTCGCATCCAGCAACTCTTCACCAGCTGGAGTGCAGTGGTGCAATCTCGGTTCACTGCAACCTCTACCTCCTGGGTTCAAGCGATTCTAGTGCCCCAGCCTCCCGAGTAGCTGAGACTACAGGTCCAGAGAGCTCGGTGACTGCAGCGCCACGGGCCAGGAAGTACAAGTGTGGCCTGCCCCAGCCGTGTCCTGAGGAGCACCTGGCCTTCCGCGTGGTCAGCGGGGCCGCCAACGTCATTGGGCCCAAGATCTGCCTCGAGGACAAGATGCTGATGAGCAGCGTCAAGGACAACGTGGGCCGCGGGCTGAACATCGCCCTGGTGAACGGGGTCAGCGGCGAGCTCATCGAGGCCCGGGCCTTTGACATGTGGGCCGGAGATGTCAACGACCTGTTGAAGTTTATTCGGCCACTGCACGAAGGCACCCTGGTGTTCGTGGCATCCTACGACGACCCAGCCACCAAGATGAATGAAGAGACCAGAAAGCTCTTCAGTGAGCTGGGCAGCAGGAACGCCAAGGAGCTGGCCTTCCGGGACAGCTGGGTGTTTGTCGGGGCCAAGGGTGTGCAGAACAAGAGCCCCTTTGAGCAGCACGTGAAGAACAGTAAGCACAGCAACAAGTACGAAGGCTGGCCCGAGGCGCTGGAGATGGAAGGCTGTATCCCGCGGAGAAGCACGGCCAGCTAG",
 
   submitButton(text = "Run Opticon"),
 
@@ -57,5 +56,9 @@ ui <- fluidPage(
     h3(""),
     downloadLink("downloadData", "download optimization results")
 
-  )
+  ),
+
+  p("For more information about our research visit the",
+    a("Bazzini lab webpage",
+      href = "https://research.stowers.org/bazzinilab/index.html"), ".")
 )
