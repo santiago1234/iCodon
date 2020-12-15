@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# iCodon <img src='man/figures/logo.png' align="right" height="139" />
+# iCodon: <img src='man/figures/logo.png' align="right" height="139" /> designing "ideal" coding (iCodon) sequences for customized expression level
 
 <!-- badges: start -->
 [![DOI](https://zenodo.org/badge/238309734.svg)](https://zenodo.org/badge/latestdoi/238309734)
@@ -26,9 +26,9 @@ knitr::opts_chunk$set(
 
 
 The regulation of messenger RNA (mRNA) stability substantially contributes to steady-state gene expression levels in all organisms. Codon composition is the most pervasive and impactful determinant of mRNA stability in vertebrates.
-We have developed Opticon, an algorithm for the *in silico* design of coding sequences customized to achieve desired target expression levels based on synonymous codon substitutions. Users can predict the mRNA stability of any coding sequence based on its codon composition and subsequently generate more stable (optimized) or unstable (de-optimized) variants encoding for the same protein. This tool will benefit basic biological research, as well as a wide range of biotechnology applications. 
+We have developed iCodon, an algorithm for the *in silico* design of coding sequences customized to achieve desired target expression levels based on synonymous codon substitutions. Users can predict the mRNA stability of any coding sequence based on its codon composition and subsequently generate more stable (optimized) or unstable (de-optimized) variants encoding for the same protein. This tool will benefit basic biological research, as well as a wide range of biotechnology applications. 
 
-### [Opticon web-application!](https://smedina.shinyapps.io/opticon/)
+### [iCodon web-application!](https://bazzinilab.shinyapps.io/icodon/)
 
 in production [Medina et al 2020](https://www.biorxiv.org/)
 

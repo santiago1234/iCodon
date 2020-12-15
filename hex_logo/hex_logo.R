@@ -17,7 +17,7 @@ plot_cool <- ggplot2::ggplot(data = optimalcodonR::testing) +
                  legend.position = "none")
 
 
-hexSticker::sticker(plot_cool, package="optimalcodonR",
+hexSticker::sticker(plot_cool, package="iCodon",
         p_size=6, s_x=1, s_y=.75, s_width=1.3, s_height=1,p_color = "white",u_color = "white",
         h_fill="black",url = "research.stowers.org/bazzinilab",
         filename="logo.png")

@@ -3,22 +3,22 @@ Wu, Ariel Bazzini
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# optimalcodonR <img src='man/figures/logo.png' align="right" height="139" />
+# iCodon: <img src='man/figures/logo.png' align="right" height="139" /> designing “ideal” coding (iCodon) sequences for customized expression level
 
 <!-- badges: start -->
 
 [![DOI](https://zenodo.org/badge/238309734.svg)](https://zenodo.org/badge/latestdoi/238309734)
 [![Travis build
-status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
+status](https://travis-ci.org/santiago1234/iCodon.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
 [![Codecov test
-coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
+coverage](https://codecov.io/gh/santiago1234/iCodon/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
 The regulation of messenger RNA (mRNA) stability substantially
 contributes to steady-state gene expression levels in all organisms.
 Codon composition is the most pervasive and impactful determinant of
-mRNA stability in vertebrates. We have developed Opticon, an algorithm
+mRNA stability in vertebrates. We have developed iCodon, an algorithm
 for the *in silico* design of coding sequences customized to achieve
 desired target expression levels based on synonymous codon
 substitutions. Users can predict the mRNA stability of any coding
@@ -27,18 +27,18 @@ stable (optimized) or unstable (de-optimized) variants encoding for the
 same protein. This tool will benefit basic biological research, as well
 as a wide range of biotechnology applications.
 
-### [Opticon web-application\!](https://smedina.shinyapps.io/opticon/)
+### [iCodon web-application\!](https://bazzinilab.shinyapps.io/icodon/)
 
 in production [Medina et al 2020](https://www.biorxiv.org/)
 
 ## :arrow\_double\_down: Installation
 
-You can install the released version of optimalcodonR from
+You can install the released version of iCodon from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("santiago1234/optimalcodonR")
+devtools::install_github("santiago1234/iCodon")
 ```
 
 ## :book: Example
@@ -47,7 +47,7 @@ This is a basic example which shows you how to optimize the gene
 expression of the following gene:
 
 ``` r
-library(optimalcodonR)
+library(iCodon)
 cat(test_seq)
 #> ATGTGGAGCGGCGGAGCTGAGCAACAACACCCTAAAACCGACAAATCTCACCGATGCAATGGCGTCGACAGCTCAAGAAGAAAGAACAGATCGCAGCGGTGGCGATATGAAGTCAAGAAAACTGGATGA
 ```
@@ -72,5 +72,5 @@ To see what else can be accomplished with this package see the help
 with:
 
 ``` r
-browseVignettes("optimalcodonR")
+browseVignettes("iCodon")
 ```
