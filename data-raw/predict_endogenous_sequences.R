@@ -1,5 +1,5 @@
 library(tidyverse)
-library(optimalcodonR)
+library(iCodon)
 
 
 # script to generate predictions for endogenous genes ---------------------

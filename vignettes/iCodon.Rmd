@@ -1,9 +1,9 @@
 ---
-title: "optimalcodonR"
+title: "iCodon"
 output: rmarkdown::html_vignette
 author: Santiago G. Medina-Muñoz
 vignette: >
-  %\VignetteIndexEntry{optimalcodonR}
+  %\VignetteIndexEntry{iCodonR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,7 @@ This documentation describes three use cases of this package.
 3. Optimize mRNA stability with synonymous mutations.
 
 ```{r setup, message=FALSE, warning=FALSE}
-library(optimalcodonR)
+library(iCodon)
 library(dplyr)
 ```
 

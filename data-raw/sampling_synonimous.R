@@ -10,7 +10,7 @@ library(tibble)
 softmax <- function(x) exp(x) / sum(exp(x))
 
 sampling_optimization <-
-  optimalcodonR::human_optimality %>%
+  iCodon::human_optimality %>%
   arrange(optimality) %>%
   group_by(amino_acid) %>%
   mutate(
@@ -21,7 +21,7 @@ sampling_optimization <-
   split(.$amino_acid)
 
 sampling_deoptimization <-
-  optimalcodonR::human_optimality %>%
+  iCodon::human_optimality %>%
   arrange(optimality) %>%
   group_by(amino_acid) %>%
   mutate(

@@ -1,4 +1,4 @@
-library(optimalcodonR)
+library(iCodon)
 library(recipes)
 library(glmnet)
 

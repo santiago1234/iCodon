@@ -1,5 +1,5 @@
-Package: optimalcodonR
-Title: Manipulating mRNA stability by synonymous codon choice
+Package: iCodon
+Title: iCodon: Designing "ideal" coding (iCodon) sequences for customized expression level
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Santiago Gerardo",

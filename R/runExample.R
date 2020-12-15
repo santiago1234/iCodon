@@ -1,7 +1,7 @@
-#' Run optimalcodonR example
+#' Run iCodon example
 #'
 #' Launch a Shiny app that shows a demo of what can be done with
-#' \code{optimalcodonR::optimizer}.
+#' \code{iCodon::optimizer}.
 #'
 #' This example is also: TODO: add the link to the shyny app
 #' \href{http://daattali.com/shiny/ggExtra-ggMarginal-demo/}{available online}.
@@ -13,9 +13,9 @@
 #' }
 #' @export
 runExample <- function() {
-  appDir <- system.file("shiny-examples", "CodonOptimization", package = "optimalcodonR")
+  appDir <- system.file("shiny-examples", "iCodon", package = "iCodon")
   if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `optimalcodonR`.",
+    stop("Could not find example directory. Try re-installing `iCodon`.",
       call. = FALSE
     )
   }

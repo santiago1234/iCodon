@@ -2,13 +2,13 @@
 % Please edit documentation in R/runExample.R
 \name{runExample}
 \alias{runExample}
-\title{Run optimalcodonR example}
+\title{Run iCodon example}
 \usage{
 runExample()
 }
 \description{
 Launch a Shiny app that shows a demo of what can be done with
-\code{optimalcodonR::optimizer}.
+\code{iCodon::optimizer}.
 }
 \details{
 This example is also: TODO: add the link to the shyny app

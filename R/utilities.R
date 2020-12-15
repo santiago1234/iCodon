@@ -96,7 +96,7 @@ translate <- function(secuencia) {
   secuencia <- stringr::str_to_upper(secuencia)
   # validate_sequence(secuencia) calling this gives a bug
   split_by_codons(secuencia) %>%
-    purrr::map_chr(function(x) optimalcodonR::gc_codons_to_amino[x]) %>%
+    purrr::map_chr(function(x) iCodon::gc_codons_to_amino[x]) %>%
     stringr::str_c(collapse = "")
 }
 

@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# optimalcodonR <img src='man/figures/logo.png' align="right" height="139" />
+# iCodon <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 [![DOI](https://zenodo.org/badge/238309734.svg)](https://zenodo.org/badge/latestdoi/238309734)
-[![Travis build status](https://travis-ci.org/santiago1234/optimalcodonR.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
-[![Codecov test coverage](https://codecov.io/gh/santiago1234/optimalcodonR/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
+[![Travis build status](https://travis-ci.org/santiago1234/iCodon.svg?branch=master)](https://travis-ci.org/santiago1234/optimalcodonR)
+[![Codecov test coverage](https://codecov.io/gh/santiago1234/iCodon/branch/master/graph/badge.svg)](https://codecov.io/gh/santiago1234/optimalcodonR?branch=master)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
@@ -34,11 +34,11 @@ in production [Medina et al 2020](https://www.biorxiv.org/)
 
 ## :arrow_double_down: Installation
 
-You can install the released version of optimalcodonR from [GitHub](https://github.com/) with:
+You can install the released version of iCodon from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("santiago1234/optimalcodonR")
+devtools::install_github("santiago1234/iCodon")
 ```
 
 ## :book: Example
@@ -47,7 +47,7 @@ This is a basic example which shows you how to optimize the gene expression of
 the following gene:
 
 ```{r example}
-library(optimalcodonR)
+library(iCodon)
 cat(test_seq)
 ```
 
@@ -67,6 +67,6 @@ visualize_evolution(result)
 To see what else can be accomplished with this package see the help with:
 
 ```{r, eval=FALSE}
-browseVignettes("optimalcodonR")
+browseVignettes("iCodon")
 ```
 

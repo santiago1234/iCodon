@@ -1,4 +1,4 @@
 library(testthat)
-library(optimalcodonR)
+library(iCodon)
 
-test_check("optimalcodonR")
+test_check("iCodon")
