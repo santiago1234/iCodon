@@ -71,7 +71,7 @@ server <- function(input, output) {
 
 
     results <-
-      optimalcodonR::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
+      iCodon::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
       dplyr::mutate(
         codons_change = purrr::map_chr(synonymous_seq, function(x) codon_distance(x, input$open_readin_frame)),
         nucleotides_change = purrr::map_chr(synonymous_seq, function(x) nucleotide_distance(x, input$open_readin_frame))
