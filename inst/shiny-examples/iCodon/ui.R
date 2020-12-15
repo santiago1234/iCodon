@@ -16,17 +16,17 @@ library(magrittr)
 ui <- fluidPage(
   theme = shinythemes::shinytheme("flatly"),
   shinyFeedback::useShinyFeedback(), # include ShinyFeedback
-  titlePanel("Opticon: designing coding sequences for customized expression levels"),
+  titlePanel('iCodon: designing "ideal" coding (iCodon) sequences for customized expression level'),
 
   p(
-    "Opticon predicts the mRNA stability of any coding sequence based on its codon composition ",
+    "iCodon predicts the mRNA stability of any coding sequence based on its codon composition ",
     "and then subsequently generates a ",
     em("more stable (optimization) or more unstable (de-optimization) " ),
     "variant that will encode for the same protein. The model is optimized for several vertebrate genomes, that can be selected below."),
   p("\nFor a description of the method check our paper: ",
     a("Medina et al. 2020 (in preparation)",
       href = "https://www.biorxiv.org/"), "."),
-  p("Opticon is also available as an",
+  p("iCodon is also available as an",
     a("R package",
       href = "https://github.com/santiago1234/optimalcodonR"), "."),
   fluidPage(
@@ -45,7 +45,7 @@ ui <- fluidPage(
   "\nExample sequence (copy and paste above):",
   "ATGGATCGTGGTCAGCATCCTCCTGGGTGGGCCTGGCAGTGGCTTTCCTCGCATCCAGCAACTCTTCACCAGCTGGAGTGCAGTGGTGCAATCTCGGTTCACTGCAACCTCTACCTCCTGGGTTCAAGCGATTCTAGTGCCCCAGCCTCCCGAGTAGCTGAGACTACAGGTCCAGAGAGCTCGGTGACTGCAGCGCCACGGGCCAGGAAGTACAAGTGTGGCCTGCCCCAGCCGTGTCCTGAGGAGCACCTGGCCTTCCGCGTGGTCAGCGGGGCCGCCAACGTCATTGGGCCCAAGATCTGCCTCGAGGACAAGATGCTGATGAGCAGCGTCAAGGACAACGTGGGCCGCGGGCTGAACATCGCCCTGGTGAACGGGGTCAGCGGCGAGCTCATCGAGGCCCGGGCCTTTGACATGTGGGCCGGAGATGTCAACGACCTGTTGAAGTTTATTCGGCCACTGCACGAAGGCACCCTGGTGTTCGTGGCATCCTACGACGACCCAGCCACCAAGATGAATGAAGAGACCAGAAAGCTCTTCAGTGAGCTGGGCAGCAGGAACGCCAAGGAGCTGGCCTTCCGGGACAGCTGGGTGTTTGTCGGGGCCAAGGGTGTGCAGAACAAGAGCCCCTTTGAGCAGCACGTGAAGAACAGTAAGCACAGCAACAAGTACGAAGGCTGGCCCGAGGCGCTGGAGATGGAAGGCTGTATCCCGCGGAGAAGCACGGCCAGCTAG",
 
-  submitButton(text = "Run Opticon"),
+  submitButton(text = "Run iCodon"),
 
   mainPanel(
     plotOutput("trajectory_optimization"),
