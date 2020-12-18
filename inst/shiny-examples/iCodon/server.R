@@ -70,18 +70,13 @@ server <- function(input, output) {
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
 
 
-    results <-
-      iCodon::run_optimization_shinny(input$open_readin_frame, specie_animal) %>%
-      dplyr::mutate(
-        codons_change = purrr::map_chr(synonymous_seq, function(x) codon_distance(x, input$open_readin_frame)),
-        nucleotides_change = purrr::map_chr(synonymous_seq, function(x) nucleotide_distance(x, input$open_readin_frame))
-      )
+    results <- iCodon::run_optimization_shinny(input$open_readin_frame, specie_animal)
 
     # this section is just a message in case the input sequence is too optimal or
     # non-optimal
     initial_opt <-
       results %>%
-      dplyr::filter(iteration == 1) %>%
+      dplyr::filter(iteration == 0) %>%
       dplyr::slice(1:1) %>%
       dplyr::pull(.data$predicted_stability)
 

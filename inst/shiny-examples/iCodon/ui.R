@@ -9,7 +9,7 @@
 
 library(shiny)
 library(shinyFeedback)
-library(optimalcodonR)
+library(iCodon)
 library(magrittr)
 
 
@@ -28,7 +28,11 @@ ui <- fluidPage(
       href = "https://www.biorxiv.org/"), "."),
   p("iCodon is also available as an",
     a("R package",
-      href = "https://github.com/santiago1234/optimalcodonR"), "."),
+      href = "https://github.com/santiago1234/iCodon"), "."),
+
+  p("For more information about our research visit the",
+    a("Bazzini lab webpage",
+      href = "https://research.stowers.org/bazzinilab/index.html"), "."),
   fluidPage(
 
     selectInput("specie",
@@ -56,9 +60,5 @@ ui <- fluidPage(
     h3(""),
     downloadLink("downloadData", "download optimization results")
 
-  ),
-
-  p("For more information about our research visit the",
-    a("Bazzini lab webpage",
-      href = "https://research.stowers.org/bazzinilab/index.html"), ".")
+  )
 )
