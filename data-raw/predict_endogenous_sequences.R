@@ -26,7 +26,6 @@ add_optimality_prediction <- function(specie, data_s) {
   # table with column that includes the predictions
   data_s %>%
     select(-coding)
-
 }
 
 endo_optipred <-

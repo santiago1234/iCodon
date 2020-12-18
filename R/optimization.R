@@ -5,13 +5,12 @@
 #' @param specie character, species
 #' @param n_iterations integer, number of evolution iterations
 #' @param make_more_optimal logical, If true the sequence is optimized, if false
-#' @param mutation_Rate doblue, number of mutation to introduce at eact iteration
+#' @param mutation_Rate double, number of mutation to introduce at each iteration
 #' given as a probability (1 = max (mutate all positions), 0 = min (no mutations))
 #' @param max_abs_val A maximum value (absolute value) such that the sequences
 #' cannot go beyond that value. Infinite is used as default, in this case there is not
 #' a limit for the sequences
 #' @param n_Daughters integer, number of child sequences to explore at each iteration
-#' is is deoptimized (less optimal)
 #'
 #' @return a [tibble][tibble::tibble-package], the best sequence at each iteration
 #' @export
@@ -33,7 +32,7 @@ optimizer <- function(sequence_to_optimize,
   # set a seed for reproducibility
   set.seed(123)
 
-  # initialize the mRNA stabilitiy predictor
+  # initialize the mRNA stability predictor
   stability_predictor <- predict_stability(specie)
 
   # initialize function for optimization
@@ -66,7 +65,7 @@ optimizer <- function(sequence_to_optimize,
   current_best <- selector(sequence_to_optimize, 1)
   best_at_each_iteration[[1]] <- current_best
 
-  for (i in 2:n_iterations) {
+  for (i in 2:(n_iterations + 1)) {
     message(paste0(i, "."), appendLF = FALSE)
 
     hijas_mutantes <- evolucionador(current_seq = current_best$synonymous_seq)
@@ -78,20 +77,16 @@ optimizer <- function(sequence_to_optimize,
 
     if (current_best_tmp$predicted_stability < max_abs_val & make_more_optimal) {
       current_best <- current_best_tmp
-
     } else if (current_best_tmp$predicted_stability > -1 * max_abs_val & !make_more_optimal) {
       current_best <- current_best_tmp
-
     } else {
       current_best$iteration <- current_best$iteration + 1
-
     }
     best_at_each_iteration[[i]] <- current_best
-
   }
 
   dplyr::bind_rows(best_at_each_iteration) %>%
     dplyr::mutate(
-      iteration = as.integer(.data$iteration)
+      iteration = as.integer(.data$iteration) - 1 #  substrack 1 so 0 is the original seq
     )
 }

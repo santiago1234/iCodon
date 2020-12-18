@@ -10,7 +10,7 @@ predict_stability(specie)
 \item{specie}{character: one of human, mouse, fish, or xenopus}
 }
 \value{
-
+numeric vector with predicted decay rate
 }
 \description{
 This function will generate a function that predicts the mRNA stability of the

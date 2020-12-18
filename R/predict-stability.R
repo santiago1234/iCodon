@@ -6,7 +6,7 @@
 #' dna sequences (vector) these sequences should not contain repeated elements
 #' @param specie character: one of human, mouse, fish, or xenopus
 #'
-#' @return
+#' @return numeric vector with predicted decay rate
 #' @export
 #'
 #' @examples

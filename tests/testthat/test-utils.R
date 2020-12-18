@@ -47,14 +47,3 @@ test_that("correct number of counts", {
   expect_false("CGA" %in% outpu1$codon)
   expect_error(count_codons("A"))
 })
-
-
-# other utils -------------------------------------------------------------
-
-
-test_that("pretty print dna", {
-  seq_test <- stringr::str_c(test_seq, test_seq)
-  prety_seq <- pretty_print_seq(seq_test)
-  prety_seq_back_to_normal <- stringr::str_replace_all(prety_seq, "\n", "")
-  expect_equal(prety_seq_back_to_normal, seq_test)
-})

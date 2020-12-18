@@ -24,15 +24,14 @@ stop codon}
 
 \item{make_more_optimal}{logical, If true the sequence is optimized, if false}
 
-\item{mutation_Rate}{doblue, number of mutation to introduce at eact iteration
+\item{mutation_Rate}{double, number of mutation to introduce at each iteration
 given as a probability (1 = max (mutate all positions), 0 = min (no mutations))}
 
 \item{max_abs_val}{A maximum value (absolute value) such that the sequences
 cannot go beyond that value. Infinite is used as default, in this case there is not
 a limit for the sequences}
 
-\item{n_Daughters}{integer, number of child sequences to explore at each iteration
-is is deoptimized (less optimal)}
+\item{n_Daughters}{integer, number of child sequences to explore at each iteration}
 }
 \value{
 a [tibble][tibble::tibble-package], the best sequence at each iteration

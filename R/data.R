@@ -134,4 +134,3 @@
 #'   \item{optimality}{predicted mRNA stability}
 #' }
 "optipred"
-

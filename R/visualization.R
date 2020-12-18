@@ -118,7 +118,7 @@ plot_optimization <- function(optimization_run) {
     ) +
     ggplot2::geom_point(data = ending, ggplot2::aes(x = .data$half_life, y = .2), shape = 19, size = 3) +
     ggplot2::geom_point(data = optimization_run, ggplot2::aes(x = .data$half_life, y = .2), shape = 1, size = 2) +
-    ggrepel::geom_text_repel(ggplot2::aes(x = .data$half_life, y = .2, label = .data$etiqueta), size = 6, color = 'grey30') +
+    ggrepel::geom_text_repel(ggplot2::aes(x = .data$half_life, y = .2, label = .data$etiqueta), size = 6, color = "grey30") +
     ggplot2::labs(
       x = "mRNA stability (half life)",
       y = NULL,
