@@ -90,6 +90,19 @@ server <- function(input, output) {
   })
 
 
+  output$predicte_stability <- renderText({
+    # get the best sequence
+    # the best sequence is the sequence at the last iteration
+    datos <- dataInput()
+    prediction <- datos %>%
+      dplyr::filter(optimization == "optimized", iteration == 0) %>%
+      dplyr::pull(predicted_stability) %>%
+      round(5)
+
+    prediction
+  })
+
+
   output$optimized_sequence <- renderText({
     # get the best sequence
     # the best sequence is the sequence at the last iteration
@@ -126,7 +139,19 @@ server <- function(input, output) {
       paste("optimization-", Sys.Date(), ".csv", sep="")
     },
     content = function(file) {
-      readr::write_csv(dataInput(), file)
+      datos <- dataInput()
+      # change the optimization value for iteration 0 to show input sequence
+      seqs_iter <- datos %>%
+        dplyr::filter(iteration > 0)
+
+      in_seq <- datos %>%
+        dplyr::filter(iteration == 0) %>%
+        dplyr::slice(1:1) # pick 1
+
+      in_seq$optimization <- "input sequence"
+      datos <- dplyr::bind_rows(in_seq, seqs_iter)
+
+      readr::write_csv(datos, file)
     }
   )
 }

@@ -53,6 +53,8 @@ ui <- fluidPage(
 
   mainPanel(
     plotOutput("trajectory_optimization"),
+    h3("Predicted stability (input sequence):"),
+    textOutput("predicte_stability"),
     h3("Optimized Sequence:"),
     textOutput("optimized_sequence"),
     h3("Deoptimized Sequence:"),
