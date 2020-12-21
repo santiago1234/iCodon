@@ -70,7 +70,7 @@ server <- function(input, output) {
     specie_animal <- ifelse(specie_animal == "zebrafish", yes = "fish", no = specie_animal)
 
 
-    results <- iCodon::run_optimization_shinny(input$open_readin_frame, specie_animal)
+    results <- iCodon::run_optimization_shinny(secuencia, specie_animal)
 
     # this section is just a message in case the input sequence is too optimal or
     # non-optimal
