@@ -7,8 +7,6 @@
 #'
 #' @return tibble: results with optimizatin path
 #' @export
-#'
-#' @examples
 run_optimization_shinny <- function(secuencia, animal) {
 
   # the maximum values such that sequences cannot go beyond that
@@ -69,8 +67,6 @@ run_optimization_shinny <- function(secuencia, animal) {
 #' @importFrom ggplot2 aes
 #' @return ggplot object
 #' @export
-#'
-#' @examples
 viz_result_shiny <- function(result, animal) {
   optipred_specie <- dplyr::filter(
     iCodon::optipred,
@@ -90,14 +86,20 @@ viz_result_shiny <- function(result, animal) {
     ) %>%
     ggplot2::ggplot(aes(y = .data$predicted_stability, x = .data$iteration, group = .data$optimization)) +
     ggplot2::geom_line(alpha = .3) +
-    ggplot2::geom_point(aes(color = .data$optimization2), size = 2) +
+    ggplot2::geom_point(aes(fill = .data$predicted_stability), size = 2, shape = 21) +
     ggplot2::geom_text(ggplot2::aes(y = .data$predicted_stability - .1, label = round(.data$predicted_stability, 2))) +
     ggplot2::scale_x_continuous(breaks = 0:10, labels = c("initial", 1:9, "optimized/\ndeoptimized")) +
     ggplot2::labs(
       y = "mRNA stability (prediction)",
       subtitle = "Optimization Path"
     ) +
-    ggplot2::scale_color_manual(values = c("blue", "grey", "red")) +
+    #ggplot2::scale_color_manual(values = c("blue", "grey", "red")) +
+    ggplot2::scale_fill_gradient2(
+      low = "blue", mid = "white", high = "red",
+      midpoint = 0,
+      limits = c(-1, 1), oob = scales::squish
+    ) +
+    #ggplot2::scale_fill_gradient(low = "blue", high = "red", limits=c(-1, 1), oob=scales::squish) +
     cowplot::theme_cowplot() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(angle = 30, hjust = 1),
@@ -106,11 +108,11 @@ viz_result_shiny <- function(result, animal) {
     ) +
     # drw the lines for the quantil in the endogenous genes distribution
     ggplot2::geom_text(data = endo_qs_t, aes(x = .data$iteration, y = .data$qs - .07, group = 1.5, label = .data$per), color = "grey", size = 6) +
-    ggplot2::geom_hline(yintercept = endo_qs[1], color = "#2c7bb6", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_hline(yintercept = endo_qs[2], color = "#abd9e9", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_hline(yintercept = endo_qs[3], color = "black", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_hline(yintercept = endo_qs[4], color = "#fdae61", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_hline(yintercept = endo_qs[5], color = "#d7191c", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_hline(yintercept = endo_qs[1], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_hline(yintercept = endo_qs[2], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_hline(yintercept = endo_qs[3], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_hline(yintercept = endo_qs[4], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_hline(yintercept = endo_qs[5], color = "grey80", linetype = 2, size = 1 / 4) +
     ggplot2::coord_cartesian(ylim = c(-1.2, 1.2))
 
 
@@ -126,11 +128,11 @@ viz_result_shiny <- function(result, animal) {
     ) +
     cowplot::theme_cowplot() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(), text = ggplot2::element_text(size = 15)) +
-    ggplot2::geom_vline(xintercept = endo_qs[1], color = "#2c7bb6", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_vline(xintercept = endo_qs[2], color = "#abd9e9", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_vline(xintercept = endo_qs[3], color = "black", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_vline(xintercept = endo_qs[4], color = "#fdae61", linetype = 2, size = 1 / 4) +
-    ggplot2::geom_vline(xintercept = endo_qs[5], color = "#d7191c", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_vline(xintercept = endo_qs[1], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_vline(xintercept = endo_qs[2], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_vline(xintercept = endo_qs[3], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_vline(xintercept = endo_qs[4], color = "grey80", linetype = 2, size = 1 / 4) +
+    ggplot2::geom_vline(xintercept = endo_qs[5], color = "grey80", linetype = 2, size = 1 / 4) +
     ggplot2::annotate(
       geom = "text", x = -.5, y = .5, label = "Non-optimal genes",
       color = "blue", size = 7

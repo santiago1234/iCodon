@@ -3,7 +3,7 @@ title: "iCodon"
 output: rmarkdown::html_vignette
 author: Santiago G. Medina-Muñoz
 vignette: >
-  %\VignetteIndexEntry{iCodonR}
+  %\VignetteIndexEntry{iCodon}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
