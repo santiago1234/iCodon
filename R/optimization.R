@@ -11,6 +11,7 @@
 #' cannot go beyond that value. Infinite is used as default, in this case there is not
 #' a limit for the sequences
 #' @param n_Daughters integer, number of child sequences to explore at each iteration
+#' @param random_seed integer, random seed for getting reproducible results
 #'
 #' @return a [tibble][tibble::tibble-package], the best sequence at each iteration
 #' @export
@@ -23,14 +24,15 @@ optimizer <- function(sequence_to_optimize,
                       make_more_optimal = T,
                       mutation_Rate = .4,
                       max_abs_val = Inf,
-                      n_Daughters = 3) {
+                      n_Daughters = 3,
+                      random_seed = 123) {
   sequence_to_optimize <- stringr::str_to_upper(sequence_to_optimize) %>%
     stringr::str_replace_all("[\r\n ]", "") # remove white spaces
 
   validate_sequence(sequence_to_optimize) # sanity check
 
   # set a seed for reproducibility
-  set.seed(123)
+  set.seed(random_seed)
 
   # initialize the mRNA stability predictor
   stability_predictor <- predict_stability(specie)

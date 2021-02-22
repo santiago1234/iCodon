@@ -11,7 +11,8 @@ optimizer(
   make_more_optimal = T,
   mutation_Rate = 0.4,
   max_abs_val = Inf,
-  n_Daughters = 3
+  n_Daughters = 3,
+  random_seed = 123
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ cannot go beyond that value. Infinite is used as default, in this case there is 
 a limit for the sequences}
 
 \item{n_Daughters}{integer, number of child sequences to explore at each iteration}
+
+\item{random_seed}{integer, random seed for getting reproducible results}
 }
 \value{
 a [tibble][tibble::tibble-package], the best sequence at each iteration
