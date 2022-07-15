@@ -16,7 +16,7 @@ library(magrittr)
 ui <- fluidPage(
   theme = shinythemes::shinytheme("flatly"),
   shinyFeedback::useShinyFeedback(), # include ShinyFeedback
-  titlePanel('iCodon: designing "ideal" coding (iCodon) sequences for customized expression level'),
+  titlePanel('iCodon customizes gene expression based on the codon composition'),
 
   p(
     "iCodon predicts the mRNA stability of any coding sequence based on its codon composition ",
@@ -24,8 +24,8 @@ ui <- fluidPage(
     em("more stable (optimization) or more unstable (de-optimization) " ),
     "variant that will encode for the same protein. The model is optimized for several vertebrate genomes, that can be selected below."),
   p("\nFor a description of the method check our paper: ",
-    a("Medina et al. 2020 (in preparation)",
-      href = "https://www.biorxiv.org/"), "."),
+    a("DOI: 10.1038/s41598-022-15526-7",
+      href = "https://doi.org/10.1038/s41598-022-15526-7"), "."),
   p("iCodon is also available as an",
     a("R package",
       href = "https://github.com/santiago1234/iCodon"), "."),
