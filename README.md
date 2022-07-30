@@ -1,5 +1,5 @@
-Santiago G. Medina-Muñoz, Michay Diez, Luciana A Castellano, Qiushuang
-Wu, Ariel Bazzini
+Santiago G. Medina-Muñoz, Michay Diez, Luciana A Castellano, Gabriel da
+Silva Pescador, Qiushuang Wu, & Ariel Bazzini
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -15,23 +15,31 @@ coverage](https://codecov.io/gh/santiago1234/iCodon/branch/master/graph/badge.sv
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
-The regulation of messenger RNA (mRNA) stability substantially
-contributes to steady-state gene expression levels in all organisms.
-Codon composition is the most pervasive and impactful determinant of
-mRNA stability in vertebrates. We have developed iCodon, an algorithm
-for the *in silico* design of coding sequences customized to achieve
-desired target expression levels based on synonymous codon
-substitutions. Users can predict the mRNA stability of any coding
-sequence based on its codon composition and subsequently generate more
-stable (optimized) or unstable (de-optimized) variants encoding for the
-same protein. This tool will benefit basic biological research, as well
-as a wide range of biotechnology applications.
+<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-022-15526-7/MediaObjects/41598_2022_15526_Fig7_HTML.png?as=webp" title="iCodon predicts gene expression based on the codon composition and designs new variants based on synonymous mutations." alt="iCodon predicts gene expression based on the codon composition and designs new variants based on synonymous mutations." width="100%" />
 
-### [iCodon web-application\!](https://bazzinilab.shinyapps.io/icodon/)
+Messenger RNA (mRNA) stability substantially impacts steady-state gene
+expression levels in a cell. mRNA stability is strongly affected by
+codon composition in a translation-dependent manner across species,
+through a mechanism termed codon optimality. We have developed
+[iCodon](www.iCodon.org), an algorithm for customizing mRNA expression
+through the introduction of synonymous codon substitutions into the
+coding sequence. iCodon is optimized for four vertebrate transcriptomes:
+mouse, human, frog, and fish. Users can predict the mRNA stability of
+any coding sequence based on its codon composition and subsequently
+generate more stable (optimized) or unstable (deoptimized) variants
+encoding for the same protein. Further, we show that codon optimality
+predictions correlate with both mRNA stability using a massive reporter
+library and expression levels using fluorescent reporters and analysis
+of endogenous gene expression in zebrafish embryos and/or human cells.
+Therefore, iCodon will benefit basic biological research, as well as a
+wide range of applications for biotechnology and biomedicine.
 
-in production [Medina et al 2020](https://www.biorxiv.org/)
+### [iCodon web-application!](https://bazzinilab.shinyapps.io/icodon/)
 
-## :arrow\_double\_down: Installation
+[Check the iCodon
+paper](https://www.nature.com/articles/s41598-022-15526-7).
+
+## :arrow_double_down: Installation
 
 You can install the released version of iCodon from
 [GitHub](https://github.com/) with:
@@ -57,7 +65,7 @@ sequence <- test_seq
 result <- optimizer(sequence, specie = "mouse", n_iterations = 10, make_more_optimal = T)
 #> optimizing sequence (more optimal)
 #> starting genetic algorithm ...
-#> 2.3.4.5.6.7.8.9.10.
+#> 2.3.4.5.6.7.8.9.10.11.
 ```
 
 ## Visualizing the results

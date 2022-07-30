@@ -33,6 +33,8 @@ ui <- fluidPage(
   p("For more information about our research visit the",
     a("Bazzini lab webpage",
       href = "https://research.stowers.org/bazzinilab/index.html"), "."),
+  p("If you choose to use this application please cite: Diez M, Medina-Muñoz SG, Castellano LA, da Silva Pescador G, Wu Q, & Bazzini AA. iCodon customizes gene expression based on the codon composition, Scientific Reports 2022 12:12126.
+"),
   fluidPage(
 
     selectInput("specie",
