@@ -5,7 +5,7 @@
 \alias{preprocessing_recipe}
 \title{Data pre-processing pipeline}
 \format{
-An object of class \code{recipe} of length 8.
+An object of class \code{recipe} of length 9.
 }
 \usage{
 preprocessing_recipe
